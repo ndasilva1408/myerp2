@@ -16,7 +16,6 @@
 
     <!-- ===== Maven ===== -->
     <artifactId>myerp-technical</artifactId>
-    <packaging>jar</packaging>
 
     <!-- ===== General information ===== -->
     <name>${project.artifactId}</name>
@@ -38,6 +37,7 @@
     <!-- Properties -->
     <!-- =============================================================== -->
     <properties>
+
     </properties>
 
 
@@ -97,6 +97,22 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
+        </dependency>
+
+
+        <!-- ========== Test Dependencies ========== -->
+        <!-- ===== Tests ===== -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.5.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.13.2</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- ===== JSR 303 - Bean validation ===== -->
