@@ -1,6 +1,6 @@
 # MyERP
-![Build Status](https://travis-ci.com/ndasilva1408/myerp.svg?branch=master)
-![Code Coverage](https://codecov.io/github/ndasilva1408/myerp/coverage.svg)
+![Build Status](https://travis-ci.com/ndasilva1408/myerp2.svg?branch=master)
+![Code Coverage](https://codecov.io/github/ndasilva1408/myerp2/coverage.svg)
 
 ## Organisation du répertoire
 
