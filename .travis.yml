@@ -1,20 +1,13 @@
-dist: trusty
-
 language: java
 
 jdk: openjdk8
 
-############### Configuration Jacoco
+addons:
+  sonarcloud:
+    organization: "ndasilva1408"
+    token:
+      secure: "**************************" # encrypted value of your token
 
-#env:
-#  global:
-#    - CODECOV_TOKEN=9b841d48-6afe-4ed1-bdea-aa84673c57ec
-
-#script: mvn test verify -Ptest-consumer,test-business
-
-############### Configuration cobertura
-
-script: mvn cobertura:cobertura-integration-test -Ptest-consumer,test-business
-
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+script:
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=ndasilva1408_myerp2
