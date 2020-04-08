@@ -4,7 +4,18 @@ language: java
 
 jdk: openjdk8
 
-script: "mvn cobertura:cobertura"
+
+############### Configuration Jacoco
+
+#env:
+#  global:
+#    - CODECOV_TOKEN=9b841d48-6afe-4ed1-bdea-aa84673c57ec
+
+#script: mvn test verify -Ptest-consumer,test-business
+
+############### Configuration cobertura
+
+script: mvn cobertura:cobertura-integration-test -Ptest-consumer,test-business
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
