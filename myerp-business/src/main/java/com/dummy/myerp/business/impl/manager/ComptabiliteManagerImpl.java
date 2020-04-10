@@ -63,7 +63,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     // TODO à tester
     @Override
     public synchronized void addReference(EcritureComptable pEcritureComptable) {
-        // TODO à implémenter
+        // TODO à implémenter : Done
         // Bien se réferer à la JavaDoc de cette méthode !
         /* Le principe :
                 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
@@ -163,6 +163,65 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
         // TODO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
+        try {
+            this.checkEcritureComptableReference(pEcritureComptable);
+        } catch (FunctionalException ex) {
+            throw new FunctionalException(ex.getMessage());
+        }
+    }
+
+    /**
+     * RG_COMPTA_5
+     * Vérifie si La référence d'une ecriture comptable est composée du code du {@link JournalComptable}
+     * suivi de l'année de l'{@link EcritureComptable} sur 4 chiffres
+     * puis d'un numéro de séquence (sur 5 chiffres) incrémenté automatiquement à chaque écriture (dernière valeur a récupérer dans la table SequenceEcritureComptable)
+     * Le formatage de la référence est : XX-AAAA/##### -> BQ-2016/00001, il est vérifiée par le validator dans le model {@link SequenceEcritureComptable} via une expression régulière
+     *
+     * @param ecritureComptable {@link EcritureComptable} dont on veut tester la reference
+     * @throws FunctionalException si la référence enfreint une de ces règles
+     */
+    protected void checkEcritureComptableReference(EcritureComptable ecritureComptable) throws FunctionalException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(ecritureComptable.getDate());
+        String refYear = String.valueOf(calendar.get(Calendar.YEAR));
+
+        if (ecritureComptable.getReference() != null) {
+            String[] splitRef = ecritureComptable.getReference().split("[-/]");
+            //Check Journal Code
+            if (!splitRef[0].equals(ecritureComptable.getJournal().getCode())) {
+                throw new FunctionalException(
+                        "La référence de l'écriture " + splitRef[0] +
+                                " ne correspond pas au code journal "
+                                + ecritureComptable.getJournal().getCode() + ".");
+            }
+            //Check Year
+            else if (!splitRef[1].equals(refYear)) {
+                throw new FunctionalException(
+                        "La référence de l'écriture " + splitRef[1] +
+                                "ne correspond pas à l'année de l'écriture " + refYear + "."
+                );
+            }
+            if (ecritureComptable.getId() == null) {
+                int sequenceVerified = this.getNextSequenceFromEcritureComptable(ecritureComptable, calendar.get(Calendar.YEAR)) - 1;
+                if (sequenceVerified == 0) {
+                    sequenceVerified = 1;
+                }
+
+                // Format the new sequence with 0
+                String formatSequenceVerified = String.format("%05d", sequenceVerified);
+                if (!splitRef[2].equals(formatSequenceVerified)) {
+                    throw new FunctionalException(
+                            "Le numéro de séquence de l'écriture " + splitRef[2] +
+                                    "ne correspond pas à la dernière séquence du journal " + formatSequenceVerified
+                    );
+                }
+            }
+        } else {
+            throw new FunctionalException(
+                    "La référence de l'écriture ne peut pas être nulle."
+            );
+        }
+
 
     }
 
@@ -239,5 +298,10 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         } finally {
             getTransactionManager().rollbackMyERP(vTS);
         }
+    }
+
+    private int getNextSequenceFromEcritureComptable(EcritureComptable ecritureComptable, int annee) {
+        SequenceEcritureComptable sequence = getDaoProxy().getComptabiliteDao().getSequenceEcritureComptableByCodeYear(ecritureComptable.getJournal().getCode(), annee);
+        return sequence.getDerniereValeur() + 1;
     }
 }
