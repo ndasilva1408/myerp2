@@ -113,14 +113,18 @@ public class ComptabiliteManagerImplTest {
 
 
     }
-/*
-    @Test
-    void checkEcritureComptable() throws Exception {
 
+/*    @Test
+    void checkEcritureComptable() throws Exception {
+        JournalComptable journalComptable1 = new JournalComptable();
+        journalComptable1.setCode("AB");
         EcritureComptable ecritureComptable1 = new EcritureComptable();
+        ecritureComptable1.setId(1);
         ecritureComptable1.setLibelle("Libelle");
         ecritureComptable1.setDate(localdate);
-        ecritureComptable1.setJournal(new JournalComptable("AC", "Achat"));
+        ecritureComptable1.setJournal(journalComptable1);
+        ecritureComptable1.setReference("AB-2020/00001");
+
 
         ecritureComptable1.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                 null, null,
@@ -129,7 +133,7 @@ public class ComptabiliteManagerImplTest {
                 null,
                 new BigDecimal(123), null));
         manager.checkEcritureComptable(ecritureComptable1);
-    }
+    }*/
 
     @Test()
     public void checkEcritureComptableUnitViolation() throws Exception {
@@ -149,6 +153,7 @@ public class ComptabiliteManagerImplTest {
     public void checkEcritureComptableUnitRG2WithTwoLignesEcrituresBalanced() throws Exception {
 
         EcritureComptable ecritureComptable = new EcritureComptable();
+        ecritureComptable.setId(1);
         ecritureComptable.setJournal(new JournalComptable("BQ", "Barbecue"));
         ecritureComptable.setDate(new Date());
         ecritureComptable.setLibelle("Libelle");
@@ -187,7 +192,7 @@ public class ComptabiliteManagerImplTest {
     }
 
 
-    @Test
+ /*   @Test
     public void checkEcritureComptableUnitRG2() throws Exception {
         exception.expect(FunctionalException.class);
         exception.expectMessage("L'écriture comptable n'est pas équilibrée.");
@@ -204,38 +209,39 @@ public class ComptabiliteManagerImplTest {
                 null,
                 new BigDecimal(123), null));
         manager.checkEcritureComptableUnit(ecritureComptable1);
-    }
+    }*/
 
 
     @Test
     public void checkEcritureComptableReferenceRG5WhenRefIsNull() throws Exception {
         exception.expect(FunctionalException.class);
         exception.expectMessage("La référence de l'écriture ne peut pas être nulle.");
-
         when(ecritureComptable.getDate()).thenReturn(localdate);
         when(ecritureComptable.getReference()).thenReturn(null);
 
         manager.checkEcritureComptableReference(ecritureComptable);
+
     }
 
 
    @Test
     public void checkEcritureComptableReferenceRG5whenJournalCodeIsWrong() throws Exception {
-        
+       exception.expect(FunctionalException.class);
+       exception.expectMessage("La référence de l'écriture AB ne correspond pas au code journal AA.");
+
+       String wrongCodeJournal = "AA";
         when(ecritureComptable.getDate()).thenReturn(localdate);
         when(ecritureComptable.getReference()).thenReturn("AB-2020/00001");
-        when(calendar.get(Calendar.YEAR)).thenReturn(2020);
-        when(ecritureComptable.getJournal().getCode()).thenReturn("AB");
+        when(ecritureComptable.getJournal()).thenReturn(journalComptable);
+        when(ecritureComptable.getJournal().getCode()).thenReturn(wrongCodeJournal);
 
         manager.checkEcritureComptableReference(ecritureComptable);
-    }*/
 
-    @Test
-    public void checkEcritureComptableUnitViolation() {
-        EcritureComptable vEcritureComptable;
-        vEcritureComptable = new EcritureComptable();
-        assertThrows(FunctionalException.class, () -> manager.checkEcritureComptableUnit(vEcritureComptable));
+
+
     }
+
+
 
     @Test
     public void checkEcritureComptableUnitRG2() {
