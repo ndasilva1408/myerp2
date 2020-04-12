@@ -8,7 +8,6 @@ import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.model.bean.comptabilite.*;
 
 import com.dummy.myerp.technical.exception.FunctionalException;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -114,7 +113,7 @@ public class ComptabiliteManagerImplTest {
 
     }
 
-/*    @Test
+    @Test
     void checkEcritureComptable() throws Exception {
         JournalComptable journalComptable1 = new JournalComptable();
         journalComptable1.setCode("AB");
@@ -124,16 +123,20 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable1.setDate(localdate);
         ecritureComptable1.setJournal(journalComptable1);
         ecritureComptable1.setReference("AB-2020/00001");
-
-
         ecritureComptable1.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                 null, null,
                 new BigDecimal(123)));
         ecritureComptable1.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
                 null,
                 new BigDecimal(123), null));
+
+
+
+        when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
+        when(comptabiliteDao.getEcritureComptableByRef(ecritureComptable1.getReference())).thenReturn(ecritureComptable1);
+
         manager.checkEcritureComptable(ecritureComptable1);
-    }*/
+    }
 
     @Test()
     public void checkEcritureComptableUnitViolation() throws Exception {
@@ -191,25 +194,6 @@ public class ComptabiliteManagerImplTest {
 
     }
 
-
- /*   @Test
-    public void checkEcritureComptableUnitRG2() throws Exception {
-        exception.expect(FunctionalException.class);
-        exception.expectMessage("L'écriture comptable n'est pas équilibrée.");
-
-        EcritureComptable ecritureComptable1 = new EcritureComptable();
-        ecritureComptable1.setLibelle("Libelle");
-        ecritureComptable1.setDate(localdate);
-        ecritureComptable1.setJournal(new JournalComptable("AC", "Achat"));
-
-        ecritureComptable1.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
-                null, null,
-                new BigDecimal(12333)));
-        ecritureComptable1.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
-                null,
-                new BigDecimal(123), null));
-        manager.checkEcritureComptableUnit(ecritureComptable1);
-    }*/
 
 
     @Test
