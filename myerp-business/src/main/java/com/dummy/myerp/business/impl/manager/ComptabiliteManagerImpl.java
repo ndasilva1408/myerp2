@@ -198,7 +198,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             else if (!splitRef[1].equals(refYear)) {
                 throw new FunctionalException(
                         "La référence de l'écriture " + splitRef[1] +
-                                "ne correspond pas à l'année de l'écriture " + refYear + "."
+                                " ne correspond pas à l'année de l'écriture " + refYear + "."
                 );
             }
             if (ecritureComptable.getId() == null) {
@@ -212,7 +212,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 if (!splitRef[2].equals(formatSequenceVerified)) {
                     throw new FunctionalException(
                             "Le numéro de séquence de l'écriture " + splitRef[2] +
-                                    "ne correspond pas à la dernière séquence du journal " + formatSequenceVerified
+                                    " ne correspond pas à la dernière séquence du journal " + formatSequenceVerified +"."
                     );
                 }
             }

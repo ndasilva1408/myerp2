@@ -131,7 +131,6 @@ public class ComptabiliteManagerImplTest {
                 new BigDecimal(123), null));
 
 
-
         when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
         when(comptabiliteDao.getEcritureComptableByRef(ecritureComptable1.getReference())).thenReturn(ecritureComptable1);
 
@@ -153,7 +152,7 @@ public class ComptabiliteManagerImplTest {
     @Test
     @Tag("RG2")
     @DisplayName("Soit 1234 en debit et credit , test d'équilibre de l'ecriture")
-    public void checkEcritureComptableUnitRG2WithTwoLignesEcrituresBalanced() throws Exception {
+    public void checkEcritureComptableUnitRG2_WithTwoLignesEcrituresBalanced() throws Exception {
 
         EcritureComptable ecritureComptable = new EcritureComptable();
         ecritureComptable.setId(1);
@@ -172,7 +171,7 @@ public class ComptabiliteManagerImplTest {
     @Test
     @Tag("RG2")
     @DisplayName("Soit 0 en debit et credit , test d'équilibre de l'ecriture")
-    public void checkEcritureComptableUnitRG2With0InDebitAndCredit() throws Exception {
+    public void checkEcritureComptableUnitRG2_With0InDebitAndCredit() throws Exception {
         exception.expect(FunctionalException.class);
         exception.expectMessage("L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
 
@@ -194,10 +193,10 @@ public class ComptabiliteManagerImplTest {
 
     }
 
-
+// --- TEST RG5
 
     @Test
-    public void checkEcritureComptableReferenceRG5WhenRefIsNull() throws Exception {
+    public void checkEcritureComptableReferenceRG5_WhenRefIsNull() throws Exception {
         exception.expect(FunctionalException.class);
         exception.expectMessage("La référence de l'écriture ne peut pas être nulle.");
         when(ecritureComptable.getDate()).thenReturn(localdate);
@@ -208,12 +207,12 @@ public class ComptabiliteManagerImplTest {
     }
 
 
-   @Test
-    public void checkEcritureComptableReferenceRG5whenJournalCodeIsWrong() throws Exception {
-       exception.expect(FunctionalException.class);
-       exception.expectMessage("La référence de l'écriture AB ne correspond pas au code journal AA.");
+    @Test
+    public void checkEcritureComptableReferenceRG5_whenJournalCodeIsWrong() throws Exception {
+        exception.expect(FunctionalException.class);
+        exception.expectMessage("La référence de l'écriture AB ne correspond pas au code journal AA.");
 
-       String wrongCodeJournal = "AA";
+        String wrongCodeJournal = "AA";
         when(ecritureComptable.getDate()).thenReturn(localdate);
         when(ecritureComptable.getReference()).thenReturn("AB-2020/00001");
         when(ecritureComptable.getJournal()).thenReturn(journalComptable);
@@ -222,10 +221,57 @@ public class ComptabiliteManagerImplTest {
         manager.checkEcritureComptableReference(ecritureComptable);
 
 
+    }
+
+    @Test
+    public void checkEcritureComptableReferenceRG5_whenYearIsWrong() throws Exception {
+        exception.expect(FunctionalException.class);
+        exception.expectMessage("La référence de l'écriture 2010 ne correspond pas à l'année de l'écriture 2020.");
+
+        when(ecritureComptable.getDate()).thenReturn(localdate);
+        when(ecritureComptable.getReference()).thenReturn("AB-2010/00001");
+        when(ecritureComptable.getJournal()).thenReturn(journalComptable);
+        when(ecritureComptable.getJournal().getCode()).thenReturn("AB");
+
+        manager.checkEcritureComptableReference(ecritureComptable);
+
+    }
+
+    @Test
+    public void checkEcritureComptableReferenceRG5_whenYearIdIsNull() throws Exception {
+
+
+        when(ecritureComptable.getDate()).thenReturn(localdate);
+        when(ecritureComptable.getReference()).thenReturn("AB-2020/00001");
+        when(ecritureComptable.getJournal()).thenReturn(journalComptable);
+        when(ecritureComptable.getJournal().getCode()).thenReturn("AB");
+        when(ecritureComptable.getId()).thenReturn(null);
+        when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
+        when(comptabiliteDao.getSequenceEcritureComptableByCodeYear(journalComptable.getCode(), 2020)).thenReturn(sequenceEcritureComptable);
+        when(sequenceEcritureComptable.getDerniereValeur()).thenReturn(00000);
+        manager.checkEcritureComptableReference(ecritureComptable);
+
+    }
+
+    @Test
+    public void checkEcritureComptableReferenceRG5_whenSequenceNumberIsWrong() throws Exception {
+        exception.expect(FunctionalException.class);
+        exception.expectMessage("Le numéro de séquence de l'écriture 00001 ne correspond pas à la dernière séquence du journal 120000.");
+
+        when(ecritureComptable.getDate()).thenReturn(localdate);
+        when(ecritureComptable.getReference()).thenReturn("AB-2020/00001");
+        when(ecritureComptable.getJournal()).thenReturn(journalComptable);
+        when(ecritureComptable.getJournal().getCode()).thenReturn("AB");
+        when(ecritureComptable.getId()).thenReturn(null);
+        when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
+        when(comptabiliteDao.getSequenceEcritureComptableByCodeYear(journalComptable.getCode(), 2020)).thenReturn(sequenceEcritureComptable);
+        when(sequenceEcritureComptable.getDerniereValeur()).thenReturn(120000);
+        manager.checkEcritureComptableReference(ecritureComptable);
 
     }
 
 
+//------------------------ ANCIEN TEST DEJA PRESENT--------------------------------------
 
     @Test
     public void checkEcritureComptableUnitRG2() {
@@ -241,7 +287,7 @@ public class ComptabiliteManagerImplTest {
                 null, null,
                 new BigDecimal(1234)));
 
-       assertThrows(FunctionalException.class, () -> manager.checkEcritureComptableUnit(vEcritureComptable));
+        assertThrows(FunctionalException.class, () -> manager.checkEcritureComptableUnit(vEcritureComptable));
     }
 
     @Test
