@@ -161,12 +161,21 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                     "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
         }
 
-        // TODO ===== RG_Compta_5 : Format et contenu de la référence
+        // TODO ===== RG_Compta_5 : Format et contenu de la référence : DONE
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
         try {
             this.checkEcritureComptableReference(pEcritureComptable);
         } catch (FunctionalException ex) {
             throw new FunctionalException(ex.getMessage());
+        }
+
+        // ===== RG_Compta_7 : Les montants des lignes d'écritures peuvent comporter 2 chiffres maximum après la virgule.
+        for (LigneEcritureComptable vLigneEcritureComptable : pEcritureComptable.getListLigneEcriture()) {
+            int scaleCredit = (vLigneEcritureComptable.getCredit() != null) ? vLigneEcritureComptable.getCredit().scale() : 0;
+            int scaleDebit = (vLigneEcritureComptable.getDebit() != null) ? vLigneEcritureComptable.getDebit().scale() : 0;
+            if (scaleCredit > 2 ||
+                    scaleDebit > 2)
+                throw new FunctionalException("Les montants des lignes d'écritures peuvent comporter 2 chiffres maximum après la virgule.");
         }
     }
 
