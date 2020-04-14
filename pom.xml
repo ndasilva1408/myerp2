@@ -414,6 +414,14 @@
                         <check />
                     </configuration>
                     <executions>
+                        <execution>
+                            <id>cobertura-check</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>cobertura</goal>
+                                <goal>cobertura-integration-test</goal>
+                            </goals>
+                        </execution>
                     </executions>
                 </plugin>
 
@@ -609,6 +617,8 @@
                     </reportSet>
                 </reportSets>
             </plugin>
+
+            <!-- ===== Création du rapport d'analyse des test par Cobertura ===== -->
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

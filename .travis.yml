@@ -13,7 +13,7 @@ before_install:
 
 ############### Configuration cobertura
 
-script: mvn cobertura:cobertura-integration-test -Ptest-consumer,test-business
+script: mvn cobertura:cobertura-integration-test
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
