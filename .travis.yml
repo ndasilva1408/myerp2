@@ -17,3 +17,4 @@ script: mvn cobertura:cobertura-integration-test -Ptest-business
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - codecov
