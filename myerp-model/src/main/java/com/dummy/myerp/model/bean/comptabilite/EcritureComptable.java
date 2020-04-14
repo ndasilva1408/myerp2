@@ -133,4 +133,14 @@ public class EcritureComptable {
             .append("}");
         return vStB.toString();
     }
+
+
+    public boolean equals(EcritureComptable ecritureComptable) {
+        if (ecritureComptable.getJournal() != this.getJournal() || ecritureComptable.getReference() != this.getReference() || ecritureComptable.getLibelle() != this.getLibelle() )
+
+        return false;
+
+        return true;
+
+    }
 }
