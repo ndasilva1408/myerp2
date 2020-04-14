@@ -26,6 +26,9 @@ import static org.junit.Assert.*;
 public class BusinessIT {
 
 
+    private ComptabiliteManagerImpl manager;
+
+
     @Autowired
     private BusinessProxy business;
     @Autowired
@@ -38,7 +41,27 @@ public class BusinessIT {
         configure(business, dao, transactionManager);
     }
 
+
+    @Before
+    public void setup() {
+        manager = new ComptabiliteManagerImpl();}
+
     //------------------------------------------------------------------Test DAO -----------------------------------------------------------
+    @Test
+    public void getListCompteComptableTest() {
+        assertFalse(manager.getListCompteComptable().isEmpty());
+    }
+
+    @Test
+    public void getListJournalComptableTest() {
+        assertFalse(manager.getListJournalComptable().isEmpty());
+    }
+
+    @Test
+    public void getListEcritureComptableTest() {
+        assertFalse(manager.getListEcritureComptable().isEmpty());
+    }
+
     @Test
     public void givenEcritureComptable_thenInsertEcritureComptable() {
         JournalComptable journalComptable = new JournalComptable();
