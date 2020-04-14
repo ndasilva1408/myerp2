@@ -135,12 +135,12 @@ public class EcritureComptable {
     }
 
 
-    public boolean equals(EcritureComptable ecritureComptable) {
+  /*  public boolean equals(EcritureComptable ecritureComptable) {
         if (ecritureComptable.getJournal() != this.getJournal() || ecritureComptable.getReference() != this.getReference() || ecritureComptable.getLibelle() != this.getLibelle() )
 
         return false;
 
         return true;
 
-    }
+    }*/
 }

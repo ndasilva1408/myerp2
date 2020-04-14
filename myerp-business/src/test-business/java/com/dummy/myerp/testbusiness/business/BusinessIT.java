@@ -50,7 +50,7 @@ public class BusinessIT {
         manager = new ComptabiliteManagerImpl();
     }
 
- /*   //------------------------------------------------------------------Test DAO -----------------------------------------------------------
+   //------------------------------------------------------------------Test DAO -----------------------------------------------------------
     @Test
     public void getListCompteComptableTest() {
         assertFalse(manager.getListCompteComptable().isEmpty());
@@ -113,9 +113,9 @@ public class BusinessIT {
         }                                              // Marche pas ? Pourtant egaux
 
        assert  (ecritureComptable1.equals(ecritureComptableTest));
-    */
+ */
 
- /*
+
     }
 
     @Test
