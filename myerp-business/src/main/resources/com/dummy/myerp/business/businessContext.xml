@@ -16,6 +16,8 @@
     </bean>
 
 
+
     <!-- ========== Transaction Managers ========== -->
     <import resource="transactionContext.xml"/>
+    <import resource="classpath:/com/dummy/myerp/consumer/consumerContext.xml"/>
 </beans>

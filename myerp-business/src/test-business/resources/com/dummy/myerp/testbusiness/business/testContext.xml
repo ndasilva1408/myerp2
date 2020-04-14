@@ -4,9 +4,8 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- ==================== External datasource properties file ==================== -->
-    <context:property-placeholder location="classpath:../../../../myerp-business/src/test-business/resources/com/dummy/myerp/testbusiness/business/db-test.properties"/>
-
+    <!--- ==================== External datasource properties file ==================== -->
+    <context:property-placeholder location="classpath:/com/dummy/myerp/testbusiness/business/db-test.properties"/>
 
     <!-- ====================   Chargement des context des modules consumer et business   ==================== -->
 
@@ -28,7 +27,6 @@
         <property name="minIdle" value="${minIdle}"/>
         <property name="maxWaitMillis" value="${maxWaitMillis}"/>
     </bean>
-
 
 
 </beans>
