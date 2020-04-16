@@ -66,6 +66,8 @@ public class BusinessIT {
         assertFalse(manager.getListEcritureComptable().isEmpty());
     }
 
+
+
     @Test
     public void givenEcritureComptable_thenInsertEcritureComptable() {
         BigDecimal bd = new BigDecimal(10);
@@ -103,17 +105,7 @@ public class BusinessIT {
 
 
         dao.getComptabiliteDao().insertEcritureComptable(ecritureComptable1);
-/*
-        try {
-           ecritureComptableTest=  dao.getComptabiliteDao().getEcritureComptable(ecritureComptable1.getId());
-           ecritureComptableTest.setDate(date);
 
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }                                              // Marche pas ? Pourtant egaux
-
-       assert  (ecritureComptable1.equals(ecritureComptableTest));
- */
 
 
     }
@@ -178,7 +170,7 @@ public class BusinessIT {
     }
 
 
-/*    @Tag("RG3")             // EN COURS
+  /* @Tag("RG3")             // EN COURS
     @Test
     public void givenEcritureWithoutRG3_WhenInsertEcritureComptable_NotPersisted() {
 
