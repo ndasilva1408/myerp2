@@ -169,8 +169,8 @@ public class BusinessIT {
         }
     }
 
-
-  /* @Tag("RG3")             // EN COURS
+/*
+   @Tag("RG3")             // EN COURS
     @Test
     public void givenEcritureWithoutRG3_WhenInsertEcritureComptable_NotPersisted() {
 

@@ -62,7 +62,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      */
     // TODO à tester
     @Override
-    public synchronized void addReference(EcritureComptable pEcritureComptable) {
+    public synchronized void addReference(EcritureComptable pEcritureComptable) throws NotFoundException {
         // TODO à implémenter : Done
         // Bien se réferer à la JavaDoc de cette méthode !
         /* Le principe :
@@ -165,7 +165,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
         try {
             this.checkEcritureComptableReference(pEcritureComptable);
-        } catch (FunctionalException ex) {
+        } catch (FunctionalException | NotFoundException ex) {
             throw new FunctionalException(ex.getMessage());
         }
 
@@ -189,7 +189,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @param ecritureComptable {@link EcritureComptable} dont on veut tester la reference
      * @throws FunctionalException si la référence enfreint une de ces règles
      */
-    protected void checkEcritureComptableReference(EcritureComptable ecritureComptable) throws FunctionalException {
+    protected void checkEcritureComptableReference(EcritureComptable ecritureComptable) throws FunctionalException, NotFoundException {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(ecritureComptable.getDate());
         String refYear = String.valueOf(calendar.get(Calendar.YEAR));
@@ -309,7 +309,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         }
     }
 
-    private int getNextSequenceFromEcritureComptable(EcritureComptable ecritureComptable, int annee) {
+    private int getNextSequenceFromEcritureComptable(EcritureComptable ecritureComptable, int annee) throws NotFoundException {
         SequenceEcritureComptable sequence = getDaoProxy().getComptabiliteDao().getSequenceEcritureComptableByCodeYear(ecritureComptable.getJournal().getCode(), annee);
         return sequence.getDerniereValeur() + 1;
     }

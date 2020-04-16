@@ -43,12 +43,8 @@
 
 
     <!-- ==================== Databases ==================== -->
-    <bean id="dataSourceMYERP" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <bean id="dataSourceMYERP" class="com.dummy.myerp.technical.util.spring.NullFactoryBean">
         <constructor-arg value="javax.sql.DataSource"/>
-        <property name="driverClassName" value="org.postgresql.Driver" />
-        <property name="url" value="${url}"/>
-        <property name="username" value="${utilisateur}"/>
-        <property name="password" value="${password}"/>
     </bean>
 
     <!-- ========== SQL ========== -->

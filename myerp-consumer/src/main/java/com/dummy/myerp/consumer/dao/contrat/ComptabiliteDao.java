@@ -89,7 +89,7 @@ public interface ComptabiliteDao {
      * @param year
      * @return
      */
-    SequenceEcritureComptable getSequenceEcritureComptableByCodeYear(String codeJournal, int year);
+    SequenceEcritureComptable getSequenceEcritureComptableByCodeYear(String codeJournal, int year) throws NotFoundException;
 
     /**
      * Insert une nouvelle référence d'écriture comptable.

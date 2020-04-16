@@ -8,6 +8,7 @@ import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.model.bean.comptabilite.*;
 
 import com.dummy.myerp.technical.exception.FunctionalException;
+import com.dummy.myerp.technical.exception.NotFoundException;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -68,7 +69,7 @@ public class ComptabiliteManagerImplTest {
 
 
     @Test
-    public void addReferenceFromNewJournal() {
+    public void addReferenceFromNewJournal() throws NotFoundException {
         //GIVEN
         int year = 2020;
         when(ecritureComptable.getDate()).thenReturn(localdate);
@@ -91,7 +92,7 @@ public class ComptabiliteManagerImplTest {
 
 
     @Test
-    public void addReferenceFromOldJournal() {
+    public void addReferenceFromOldJournal() throws NotFoundException {
         //GIVEN
         int year = 2020;
         when(ecritureComptable.getDate()).thenReturn(localdate);
