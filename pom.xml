@@ -470,6 +470,22 @@
                                 <goal>report-aggregate</goal>
                             </goals>
                         </execution>
+                        <execution>
+                            <id>merge</id>
+                            <goals>
+                                <goal>merge</goal>
+                            </goals>
+                            <configuration>
+                                <fileSets>
+                                    <fileSet>
+                                        <directory>${project.basedir}</directory>
+                                        <includes>
+                                            <include>**/*.exec</include>
+                                        </includes>
+                                    </fileSet>
+                                </fileSets>
+                            </configuration>
+                        </execution>
                     </executions>
                 </plugin>
             </plugins>
