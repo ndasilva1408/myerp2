@@ -55,6 +55,18 @@
         <log4j.version>2.8.1</log4j.version>
         <spring.version>4.3.7.RELEASE</spring.version>
 
+        <!-- ===== Sonar properties ===== -->
+        <sonar.coverage.jacoco.xmlReportPaths>
+            ${project.basedir}/${relative.path.to.parent}/target/site/jacoco-aggregate/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.projectKey>ndasilva1408_myerp2</sonar.projectKey>
+        <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.language>java</sonar.language>
+        <!-- Sonar cloud properties -->
+        <sonar.organization>ndasilva1408</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.login>e1116c53869a67f0fb55febe4c90850f85f2faa9</sonar.login>
 
     </properties>
 
@@ -96,6 +108,7 @@
         <profile>
             <id>test-consumer</id>
         </profile>
+
 
     </profiles>
 
@@ -155,6 +168,13 @@
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-core</artifactId>
                 <version>${log4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>1.6.2</version>
+                <scope>test</scope>
             </dependency>
             <!-- Commons Logging Bridge -->
             <dependency>
@@ -258,7 +278,7 @@
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
-                <version>3.13.2</version>
+                <version>3.15.0</version>
                 <scope>test</scope>
             </dependency>
 
@@ -279,7 +299,7 @@
             <dependency>
                 <groupId>org.jacoco</groupId>
                 <artifactId>org.jacoco.core</artifactId>
-                <version>0.8.2</version>
+                <version>0.8.3</version>
                 <scope>test</scope>
             </dependency>
 
@@ -447,7 +467,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.10</version>
+                    <version>3.0.0</version>
                 </plugin>
 
                 <plugin>
@@ -460,22 +480,32 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.2</version>
-                  <executions>
-                      <execution>
-                          <goals>
-                              <goal>prepare-agent</goal>
-                          </goals>
-                      </execution>
-                      <execution>
-                          <id>report</id>
-                          <phase>test</phase>
-                          <goals>
-                              <goal>report</goal>
-                          </goals>
-                      </execution>
-                  </executions>
-
+                    <version>0.8.5</version>
+                    <executions>
+                        <execution>
+                            <id>report</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>report-aggregate</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>merge</id>
+                            <goals>
+                                <goal>merge</goal>
+                            </goals>
+                            <configuration>
+                                <fileSets>
+                                    <fileSet>
+                                        <directory>${project.basedir}</directory>
+                                        <includes>
+                                            <include>**/*.exec</include>
+                                        </includes>
+                                    </fileSet>
+                                </fileSets>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
