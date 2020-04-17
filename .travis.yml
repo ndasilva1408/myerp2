@@ -16,7 +16,13 @@ before_install:
 ##script: mvn cobertura:cobertura-integration-test -P test-consumer,test-business
 
 #############Jacoco
-script: mvn verify -P test-all
+##script: mvn verify -P test-all
+env:
+  global:
+
+  CODECOV_TOKEN="292e86a5-f729-4119-ba19-5ded89d7d61b"
+
+  script: mvn verify -Ptest-consumer,test-business
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
