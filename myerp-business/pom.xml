@@ -244,7 +244,7 @@
                     is passed as VM argument when Maven the Failsafe plugin is executed.
                     -->
                     <execution>
-                        <id>pre-integration-test</id>
+                        <id>before-integration-test-execution</id>
                         <phase>pre-integration-test</phase>
                         <goals>
                             <goal>prepare-agent</goal>
@@ -264,7 +264,7 @@
                         integration tests have been run.
                     -->
                     <execution>
-                        <id>post-integration-test</id>
+                        <id>after-integration-test-execution</id>
                         <phase>post-integration-test</phase>
                         <goals>
                             <goal>report</goal>
@@ -281,7 +281,7 @@
                     -->
                     <execution>
                         <id>merge-results</id>
-                        <phase>verify</phase>
+                        <phase>post-integration-test</phase>
                         <goals>
                             <goal>merge</goal>
                         </goals>
@@ -299,7 +299,7 @@
                     </execution>
                     <execution>
                         <id>post-merge-report</id>
-                        <phase>verify</phase>
+                        <phase>post-integration-test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
@@ -314,41 +314,26 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
                 <configuration>
                     <!-- Sets the VM argument line used when unit tests are run. -->
                     <argLine>${surefireArgLine}</argLine>
-                    <!-- Skips unit tests if the value of skip.unit.tests property is true -->
-                    <skipTests>${skip.unit.tests}</skipTests>
-                    <!-- Excludes integration tests when unit tests are run. -->
-                    <excludes>
-                        <exclude>**/*IT.java</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
             <!-- Failsafe plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <argLine>${failsafeArgLine}</argLine>
+                </configuration>
                 <executions>
-                    <!--
-                        Ensures that both integration-test and verify goals of the Failsafe Maven
-                        plugin are executed.
-                    -->
                     <execution>
-                        <id>integration-tests</id>
                         <goals>
                             <goal>integration-test</goal>
                             <goal>verify</goal>
                         </goals>
-                        <configuration>
-                            <!-- Sets the VM argument line used when integration tests are run. -->
-                            <argLine>${failsafeArgLine}</argLine>
-                            <!--
-                                Skips integration tests if the value of skip.integration.tests property
-                                is true
-                            -->
-                            <skipTests>${skip.integration.tests}</skipTests>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
