@@ -1,8 +1,10 @@
 package com.dummy.myerp.model.bean.comptabilite;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.apache.commons.lang3.ObjectUtils;
+import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -43,7 +45,8 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "0", "33"));
 
        //Assert
-        assertThat(vEcriture.isEquilibree());
+        Assert.assertTrue(vEcriture.isEquilibree());
+
     }
 
     @Test
@@ -62,7 +65,7 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "0", "3"));
 
         //Assert
-        assertThat(!(vEcriture.isEquilibree()) );
+        Assert.assertFalse(vEcriture.isEquilibree());
     }
 
 
@@ -81,7 +84,7 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "0", "3"));
 
         //Assert
-        assertThat(vEcriture.getTotalCredit().equals(BigDecimal.valueOf(214)));
+        Assert.assertEquals(vEcriture.getTotalCredit(),(BigDecimal.valueOf(214.00).setScale(2, RoundingMode.CEILING)));
 
     }
 
@@ -95,7 +98,7 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "15120", "0"));
 
         //Assert
-        assertThat(vEcriture.getTotalCredit() == null);
+        Assert.assertEquals(vEcriture.getTotalCredit(),BigDecimal.ZERO);
 
     }
 
@@ -112,7 +115,7 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "0", "3"));
 
         //Assert
-        assertThat(vEcriture.getTotalCredit()==(BigDecimal.valueOf(30)));
+        Assert.assertEquals(vEcriture.getTotalDebit(),(BigDecimal.valueOf(30)));
 
     }
 
@@ -127,7 +130,7 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "0", "250"));
 
         //Assert
-        assertThat(vEcriture.getTotalDebit() == null);
+        Assert.assertEquals(vEcriture.getTotalDebit(),BigDecimal.ZERO);
 
     }
 }

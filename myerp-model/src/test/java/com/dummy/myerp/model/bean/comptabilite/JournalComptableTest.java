@@ -1,5 +1,6 @@
 package com.dummy.myerp.model.bean.comptabilite;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +37,7 @@ public class JournalComptableTest {
         getByCode(pList,"8");
 
         //Assert
-        assertThat(getByCode(pList,"8") == journalComptable1);
+        Assert.assertEquals(getByCode(pList,"8"),journalComptable1);
     }
 
     @Tag("getByCode")
@@ -55,6 +56,6 @@ public class JournalComptableTest {
         getByCode(pList,"");
 
         //Assert
-        assertThat(getByCode(pList,"") == null);
+        Assert.assertNull(getByCode(pList,""));
     }
 }

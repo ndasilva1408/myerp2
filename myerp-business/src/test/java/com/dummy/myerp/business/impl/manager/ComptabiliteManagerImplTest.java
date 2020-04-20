@@ -9,6 +9,7 @@ import com.dummy.myerp.model.bean.comptabilite.*;
 
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -108,7 +109,7 @@ public class ComptabiliteManagerImplTest {
         final String ref = ecritureComptable.getReference();
 
         //THEN
-        assertThat(ref.equals(assertRef));
+        Assert.assertEquals(ref,assertRef);
 
 
     }
@@ -135,6 +136,7 @@ public class ComptabiliteManagerImplTest {
         when(comptabiliteDao.getEcritureComptableByRef(ecritureComptable1.getReference())).thenReturn(ecritureComptable1);
 
         manager.checkEcritureComptable(ecritureComptable1);
+
     }
 
     @Test()
@@ -189,7 +191,7 @@ public class ComptabiliteManagerImplTest {
 
         manager.checkEcritureComptableUnit(vEcritureComptable);
 
-        assertThat(vEcritureComptable.isEquilibree());
+        Assert.assertTrue(vEcritureComptable.isEquilibree());
 
     }
 

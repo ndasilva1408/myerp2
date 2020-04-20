@@ -2,6 +2,7 @@ package com.dummy.myerp.model.bean.comptabilite;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class CompteComptableTest {
         getByNumero(pList,8);
 
         //Assert
-        assertThat(getByNumero(pList,8) == compteComptable);
+        Assert.assertEquals(getByNumero(pList,8), compteComptable);
     }
     @Tag("getByNumero")
     @Test
@@ -42,7 +43,8 @@ public class CompteComptableTest {
         getByNumero(pList,3);
 
         //Assert
-        assertThat(getByNumero(pList,3) == null);
+        Assert.assertNull(getByNumero(pList,3));
+
 
     }
 
