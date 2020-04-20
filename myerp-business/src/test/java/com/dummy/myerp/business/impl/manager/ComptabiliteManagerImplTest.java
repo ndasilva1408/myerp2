@@ -100,7 +100,7 @@ public class ComptabiliteManagerImplTest {
         when(journalComptable.getCode()).thenReturn("AC");
         when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
         when(comptabiliteDao.getSequenceEcritureComptableByCodeYear(journalComptable.getCode(), year)).thenReturn(sequenceEcritureComptable);
-        when(ecritureComptable.getReference()).thenReturn("AC-2020/00001");
+        when(ecritureComptable.getReference()).thenReturn("AC-2020/00004");
         when(sequenceEcritureComptable.getDerniereValeur()).thenReturn(00003);
         String assertRef = "AC-2020/00004";
 
