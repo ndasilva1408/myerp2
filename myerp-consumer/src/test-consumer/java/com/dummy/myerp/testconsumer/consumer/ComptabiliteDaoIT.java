@@ -25,7 +25,6 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/com/dummy/myerp/consumer/testContext.xml")
 public class ComptabiliteDaoIT  {
 

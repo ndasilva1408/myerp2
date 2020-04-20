@@ -4,24 +4,19 @@ import com.dummy.myerp.consumer.dao.impl.db.dao.ComptabiliteDaoImpl;
 
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
 
 @ContextConfiguration(locations = "classpath:consumerContextTest.xml")
-@RunWith(SpringJUnit4ClassRunner.class)
 public class ConsumerTest {
     @Autowired
     ComptabiliteDaoImpl dao;

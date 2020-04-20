@@ -24,7 +24,7 @@ import static com.dummy.myerp.business.impl.AbstractBusinessManager.configure;
 import static com.dummy.myerp.testbusiness.business.BusinessTestCase.getBusinessProxy;
 import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+
 @ContextConfiguration(locations = "classpath:/com/dummy/myerp/testbusiness/business/testContext.xml")
 public class BusinessIT {
 
