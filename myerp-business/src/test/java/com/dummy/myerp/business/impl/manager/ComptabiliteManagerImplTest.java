@@ -50,8 +50,7 @@ public class ComptabiliteManagerImplTest {
     JournalComptable journalComptable;
     @Mock
     SequenceEcritureComptable sequenceEcritureComptable;
-    @Mock
-    Calendar calendar;
+
 
 
     @Mock
