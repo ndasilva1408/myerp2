@@ -138,6 +138,7 @@ public class ConsumerTest {
     }
 
     @Test
+    @Rollback
     public void GivenEcritureComptable_WhenUpdateEcritureComptable_isUpdated() throws NotFoundException {
         //given
         Calendar now = Calendar.getInstance();
@@ -163,7 +164,7 @@ public class ConsumerTest {
     }
 
     @Test
-    @Rollback(true)
+    @Rollback
     public void GivenIdEcritureComptable_WhenDeleteEcritureComptable_ObjectIsDeletedAndLigneEcritureComptableIsDeleted() throws NotFoundException {
         // given
         EcritureComptable ecritureComptable = dao.getEcritureComptable(-1);
