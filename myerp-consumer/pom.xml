@@ -36,13 +36,6 @@
     <!-- Properties -->
     <!-- =============================================================== -->
     <properties>
-        <!-- ===== Application properties ===== -->
-        <relative.path.to.parent>.</relative.path.to.parent>
-        <!-- ===== Sonar properties ===== -->
-        <sonar.coverage.jacoco.xmlReportPaths>
-            ${project.basedir}/${relative.path.to.parent}/target/site/jacoco-aggregate/jacoco.xml
-        </sonar.coverage.jacoco.xmlReportPaths>
-
     </properties>
 
 
