@@ -23,10 +23,10 @@ public class TestInitSpring extends ConsumerTestCase {
     /**
      * Teste l'initialisation du contexte Spring
      */
- /*   @Test
+    @Test
     public void testInit() {
         SpringRegistry.init();
         assertNotNull(SpringRegistry.getDaoProxy());
 
-    }*/
+    }
 }

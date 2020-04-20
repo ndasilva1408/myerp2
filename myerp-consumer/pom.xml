@@ -116,6 +116,12 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-migrationsupport</artifactId>
+            <version>5.5.2</version>
+            <scope>test</scope>
+        </dependency>
 
 
     </dependencies>
