@@ -277,7 +277,12 @@
                 <scope>test</scope>
             </dependency>
 
-
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.core</artifactId>
+                <version>0.8.2</version>
+                <scope>test</scope>
+            </dependency>
 
 
         </dependencies>
@@ -451,27 +456,36 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                 </plugin>
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>cobertura-maven-plugin</artifactId>
-                    <version>2.7</version>
-                    <configuration>
-                        <formats>
-                            <format>html</format>
-                            <format>xml</format>
-                        </formats>
-                        <check />
-                    </configuration>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.5</version>
                     <executions>
                         <execution>
-                            <id>cobertura-check</id>
+                            <id>report</id>
                             <phase>verify</phase>
                             <goals>
-                                <goal>cobertura</goal>
-                                <goal>cobertura-integration-test</goal>
+                            <goal>report-aggregate</goal>
                             </goals>
+                        </execution>
+                        <execution>
+                            <id>merge</id>
+                            <goals>
+                                <goal>merge</goal>
+                            </goals>
+                            <configuration>
+                                <fileSets>
+                                    <fileSet>
+                                        <directory>${project.basedir}</directory>
+                                        <includes>
+                                            <include>**/*.exec</include>
+                                        </includes>
+                                    </fileSet>
+                                </fileSets>
+                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
+
 
 
             </plugins>
@@ -616,11 +630,7 @@
                 </reportSets>
             </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.7</version>
-            </plugin>
+
 
         </plugins>
     </reporting>
