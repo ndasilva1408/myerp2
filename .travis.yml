@@ -13,10 +13,10 @@ before_install:
 
 ############### Configuration cobertura
 
-##script: mvn cobertura:cobertura-integration-test -P test-consumer,test-business
+script: mvn cobertura:cobertura-integration-test -Ptest-consumer,test-business
 
 #############Jacoco
-script: mvn verify -P test-consumer,test-business
+##script: mvn verify -Ptest-consumer,test-business
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

@@ -16,6 +16,7 @@
 
     <!-- ===== Maven ===== -->
     <artifactId>myerp-technical</artifactId>
+    <packaging>jar</packaging>
 
     <!-- ===== General information ===== -->
     <name>${project.artifactId}</name>
@@ -37,8 +38,7 @@
     <!-- Properties -->
     <!-- =============================================================== -->
     <properties>
-
-   </properties>
+    </properties>
 
 
     <!-- =============================================================== -->
@@ -104,12 +104,7 @@
         <!-- ===== Tests ===== -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -120,14 +115,12 @@
             <artifactId>hibernate-validator</artifactId>
             <scope>test</scope>
         </dependency>
-    </dependencies>
+</dependencies>
 
 
     <!-- =============================================================== -->
     <!-- Build -->
     <!-- =============================================================== -->
     <build>
-        <plugins>
-        </plugins>
     </build>
 </project>

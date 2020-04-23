@@ -1,7 +1,5 @@
 package com.dummy.myerp.testconsumer.consumer;
 
-import com.dummy.myerp.testconsumer.consumer.ConsumerTestCase;
-import com.dummy.myerp.testconsumer.consumer.SpringRegistry;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;

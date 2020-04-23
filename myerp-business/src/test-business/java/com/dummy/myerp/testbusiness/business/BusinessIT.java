@@ -25,7 +25,7 @@ import static com.dummy.myerp.testbusiness.business.BusinessTestCase.getBusiness
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/com/dummy/myerp/testbusiness/business/testContext.xml")
+@ContextConfiguration(locations = "classpath:/com/dummy/myerp/testbusiness/business/bootstrapContext.xml")
 public class BusinessIT {
 
 
@@ -151,7 +151,7 @@ public class BusinessIT {
 
 
         List<EcritureComptable> listEcriture = getBusinessProxy().getComptabiliteManager().getListEcritureComptable();
-        EcritureComptable ecritureComptable = dao.getComptabiliteDao().getEcritureComptable(4649);
+        EcritureComptable ecritureComptable = dao.getComptabiliteDao().getEcritureComptable(29);
         ecritureComptable.getListLigneEcriture().add(0, ligneEcritureComptable1);
         ecritureComptable.getListLigneEcriture().add(1, ligneEcritureComptable2);
 

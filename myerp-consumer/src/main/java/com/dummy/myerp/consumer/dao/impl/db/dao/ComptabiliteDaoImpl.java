@@ -192,6 +192,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         vSqlParams.addValue("date", pEcritureComptable.getDate(), Types.DATE);
         vSqlParams.addValue("libelle", pEcritureComptable.getLibelle());
 
+
         vJdbcTemplate.update(SQLinsertEcritureComptable, vSqlParams);
 
         // ----- Récupération de l'id

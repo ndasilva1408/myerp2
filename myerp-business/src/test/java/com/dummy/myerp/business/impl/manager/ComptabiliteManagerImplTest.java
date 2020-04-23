@@ -16,8 +16,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.migrationsupport.rules.EnableRuleMigrationSupport;
 import org.junit.rules.ExpectedException;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -32,13 +32,13 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith({MockitoExtension.class})
-@EnableRuleMigrationSupport
+
 
 public class ComptabiliteManagerImplTest {
     private static ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
+    @InjectMocks
+    private ComptabiliteManagerImpl classUnderTest;
 
     @Mock
     EcritureComptable ecritureComptable;
@@ -140,10 +140,13 @@ public class ComptabiliteManagerImplTest {
 
     @Test()
     public void checkEcritureComptableUnitViolation() throws Exception {
-        exception.expect(FunctionalException.class);
-        exception.expectMessage("L'écriture comptable ne respecte pas les règles de gestion.");
         EcritureComptable vEcritureComptable = new EcritureComptable();
-        manager.checkEcritureComptableUnit(vEcritureComptable);
+
+        FunctionalException functionalException = assertThrows(FunctionalException.class,
+                () -> classUnderTest.checkEcritureComptable(vEcritureComptable));
+
+        assertThat(functionalException.getMessage())
+                .isEqualTo("L'écriture comptable ne respecte pas les règles de gestion.");
     }
 
 
@@ -173,9 +176,6 @@ public class ComptabiliteManagerImplTest {
     @Tag("RG2")
     @DisplayName("Soit 0 en debit et credit , test d'équilibre de l'ecriture")
     public void checkEcritureComptableUnitRG2_With0InDebitAndCredit() throws Exception {
-        exception.expect(FunctionalException.class);
-        exception.expectMessage("L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
-
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -188,9 +188,11 @@ public class ComptabiliteManagerImplTest {
                 null, null,
                 new BigDecimal(0)));
 
-        manager.checkEcritureComptableUnit(vEcritureComptable);
+        FunctionalException functionalException = assertThrows(FunctionalException.class,
+                () -> classUnderTest.checkEcritureComptable(vEcritureComptable));
 
-        assertThat(vEcritureComptable.isEquilibree());
+        assertThat(functionalException.getMessage())
+                .isEqualTo("L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
 
     }
 
@@ -198,20 +200,23 @@ public class ComptabiliteManagerImplTest {
 
     @Test
     public void checkEcritureComptableReferenceRG5_WhenRefIsNull() throws Exception {
-        exception.expect(FunctionalException.class);
-        exception.expectMessage("La référence de l'écriture ne peut pas être nulle.");
+
         when(ecritureComptable.getDate()).thenReturn(localdate);
         when(ecritureComptable.getReference()).thenReturn(null);
 
-        manager.checkEcritureComptableReference(ecritureComptable);
+
+
+        FunctionalException functionalException = assertThrows(FunctionalException.class,
+                () -> classUnderTest.checkEcritureComptableReference(ecritureComptable));
+
+        assertThat(functionalException.getMessage())
+                .isEqualTo("La référence de l'écriture ne peut pas être nulle.");
 
     }
 
 
     @Test
-    public void checkEcritureComptableReferenceRG5_whenJournalCodeIsWrong() throws Exception {
-        exception.expect(FunctionalException.class);
-        exception.expectMessage("La référence de l'écriture AB ne correspond pas au code journal AA.");
+    public void checkEcritureComptableReferenceRG5_whenJournalCodeIsWrong()  {
 
         String wrongCodeJournal = "AA";
         when(ecritureComptable.getDate()).thenReturn(localdate);
@@ -219,22 +224,28 @@ public class ComptabiliteManagerImplTest {
         when(ecritureComptable.getJournal()).thenReturn(journalComptable);
         when(ecritureComptable.getJournal().getCode()).thenReturn(wrongCodeJournal);
 
-        manager.checkEcritureComptableReference(ecritureComptable);
+        FunctionalException functionalException = assertThrows(FunctionalException.class,
+                () -> classUnderTest.checkEcritureComptableReference(ecritureComptable));
+
+        assertThat(functionalException.getMessage())
+                .isEqualTo("La référence de l'écriture AB ne correspond pas au code journal AA.");
 
 
     }
 
     @Test
-    public void checkEcritureComptableReferenceRG5_whenYearIsWrong() throws Exception {
-        exception.expect(FunctionalException.class);
-        exception.expectMessage("La référence de l'écriture 2010 ne correspond pas à l'année de l'écriture 2020.");
-
+    public void checkEcritureComptableReferenceRG5_whenYearIsWrong() {
         when(ecritureComptable.getDate()).thenReturn(localdate);
         when(ecritureComptable.getReference()).thenReturn("AB-2010/00001");
         when(ecritureComptable.getJournal()).thenReturn(journalComptable);
         when(ecritureComptable.getJournal().getCode()).thenReturn("AB");
 
-        manager.checkEcritureComptableReference(ecritureComptable);
+        FunctionalException functionalException = assertThrows(FunctionalException.class,
+                () -> classUnderTest.checkEcritureComptableReference(ecritureComptable));
+
+        assertThat(functionalException.getMessage())
+                .isEqualTo("La référence de l'écriture 2010 ne correspond pas à l'année de l'écriture 2020.");
+
 
     }
 
@@ -256,9 +267,6 @@ public class ComptabiliteManagerImplTest {
 
     @Test
     public void checkEcritureComptableReferenceRG5_whenSequenceNumberIsWrong() throws Exception {
-        exception.expect(FunctionalException.class);
-        exception.expectMessage("Le numéro de séquence de l'écriture 00001 ne correspond pas à la dernière séquence du journal 120000.");
-
         when(ecritureComptable.getDate()).thenReturn(localdate);
         when(ecritureComptable.getReference()).thenReturn("AB-2020/00001");
         when(ecritureComptable.getJournal()).thenReturn(journalComptable);
@@ -267,7 +275,14 @@ public class ComptabiliteManagerImplTest {
         when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
         when(comptabiliteDao.getSequenceEcritureComptableByCodeYear(journalComptable.getCode(), 2020)).thenReturn(sequenceEcritureComptable);
         when(sequenceEcritureComptable.getDerniereValeur()).thenReturn(120000);
-        manager.checkEcritureComptableReference(ecritureComptable);
+
+
+        FunctionalException functionalException = assertThrows(FunctionalException.class,
+                () -> classUnderTest.checkEcritureComptableReference(ecritureComptable));
+
+        assertThat(functionalException.getMessage())
+                .isEqualTo("Le numéro de séquence de l'écriture 00001 ne correspond pas à la dernière séquence du journal 120000.");
+
 
     }
 
