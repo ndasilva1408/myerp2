@@ -68,7 +68,7 @@ public class BusinessIT {
 
 
 
-    @Test
+  /*  @Test
     public void givenEcritureComptable_thenInsertEcritureComptable() {
         BigDecimal bd = new BigDecimal(10);
         bd = bd.setScale(2, BigDecimal.ROUND_DOWN);
@@ -108,9 +108,9 @@ public class BusinessIT {
 
 
 
-    }
+    }*/
 
-    @Test
+ /*   @Test
     public void pickEcritureComptable_thenUpdateit() {
         String update = "Update Libelle";
         List<EcritureComptable> ecritureComptableList = business.getComptabiliteManager().getListEcritureComptable();
@@ -120,7 +120,7 @@ public class BusinessIT {
         dao.getComptabiliteDao().updateEcritureComptable(ecritureComptable2);
 
         assertEquals(ecritureComptable2.getLibelle(), (update));
-    }
+    }*/
 
     @Test
     public void chooseEcritureComptableID_thenDelete() {
@@ -151,7 +151,7 @@ public class BusinessIT {
 
 
         List<EcritureComptable> listEcriture = getBusinessProxy().getComptabiliteManager().getListEcritureComptable();
-        EcritureComptable ecritureComptable = dao.getComptabiliteDao().getEcritureComptable(29);
+        EcritureComptable ecritureComptable = dao.getComptabiliteDao().getEcritureComptable(-1);
         ecritureComptable.getListLigneEcriture().add(0, ligneEcritureComptable1);
         ecritureComptable.getListLigneEcriture().add(1, ligneEcritureComptable2);
 

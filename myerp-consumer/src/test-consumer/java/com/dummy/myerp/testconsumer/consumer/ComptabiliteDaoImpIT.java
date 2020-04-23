@@ -22,9 +22,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-// Spring 5 only
+
 @SpringJUnitConfig(locations = {
     "classpath:com/dummy/myerp/testconsumer/consumer/bootstrapContext.xml"})
 
