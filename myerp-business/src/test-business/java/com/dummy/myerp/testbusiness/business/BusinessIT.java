@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.Tag;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -50,7 +51,7 @@ public class BusinessIT {
         manager = new ComptabiliteManagerImpl();
     }
 
-   //------------------------------------------------------------------Test DAO -----------------------------------------------------------
+    //------------------------------------------------------------------Test DAO -----------------------------------------------------------
     @Test
     public void getListCompteComptableTest() {
         assertFalse(manager.getListCompteComptable().isEmpty());
@@ -65,7 +66,6 @@ public class BusinessIT {
     public void getListEcritureComptableTest() {
         assertFalse(manager.getListEcritureComptable().isEmpty());
     }
-
 
 
     @Test
@@ -107,7 +107,6 @@ public class BusinessIT {
         dao.getComptabiliteDao().insertEcritureComptable(ecritureComptable1);
 
 
-
     }
 
     @Test
@@ -131,6 +130,7 @@ public class BusinessIT {
 
     @Test
     @Tag("RG2")
+    @Rollback
     public void givenEcritureWithoutRG2_WhenInsertEcritureComptable_NotPersisted() throws NotFoundException {
         String message = null;
 
@@ -170,32 +170,33 @@ public class BusinessIT {
     }
 
 
-   @Tag("RG3")
+    @Tag("RG3")
     @Test
+    @Rollback
     public void givenEcritureWithoutRG3_WhenInsertEcritureComptable_NotPersisted() {
 
         List<EcritureComptable> listEcriture = getBusinessProxy().getComptabiliteManager().getListEcritureComptable();
         EcritureComptable ecritureComptable = business.getComptabiliteManager().getListEcritureComptable().get(1);
 
 
-       LigneEcritureComptable ligneEcritureComptableEdit= ecritureComptable.getListLigneEcriture().get(1);
-       ligneEcritureComptableEdit.setCredit( new BigDecimal(-12000));
-       ligneEcritureComptableEdit.setDebit(BigDecimal.ZERO);
+        LigneEcritureComptable ligneEcritureComptableEdit = ecritureComptable.getListLigneEcriture().get(1);
+        ligneEcritureComptableEdit.setCredit(new BigDecimal(-12000));
+        ligneEcritureComptableEdit.setDebit(BigDecimal.ZERO);
 
 
-       LigneEcritureComptable ligneEcritureComptableEdit1= ecritureComptable.getListLigneEcriture().get(0);
-       ligneEcritureComptableEdit1.setCredit(new BigDecimal(12000));
-       ligneEcritureComptableEdit1.setDebit(BigDecimal.ZERO);
+        LigneEcritureComptable ligneEcritureComptableEdit1 = ecritureComptable.getListLigneEcriture().get(0);
+        ligneEcritureComptableEdit1.setCredit(new BigDecimal(12000));
+        ligneEcritureComptableEdit1.setDebit(BigDecimal.ZERO);
 
-       ecritureComptable.getListLigneEcriture().remove(1);
-       ecritureComptable.getListLigneEcriture().remove(0);
-       ecritureComptable.getListLigneEcriture().add(ligneEcritureComptableEdit);
-       ecritureComptable.getListLigneEcriture().add(ligneEcritureComptableEdit1);
+        ecritureComptable.getListLigneEcriture().remove(1);
+        ecritureComptable.getListLigneEcriture().remove(0);
+        ecritureComptable.getListLigneEcriture().add(ligneEcritureComptableEdit);
+        ecritureComptable.getListLigneEcriture().add(ligneEcritureComptableEdit1);
 
         String message = null;
 
         try {
-           business.getComptabiliteManager().insertEcritureComptable(ecritureComptable);
+            business.getComptabiliteManager().insertEcritureComptable(ecritureComptable);
         } catch (FunctionalException e) {
             message = e.getMessage();
         } finally {
@@ -204,8 +205,6 @@ public class BusinessIT {
             assertEquals((message), ("L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit."));
         }
     }
-
-
 
 
 }
