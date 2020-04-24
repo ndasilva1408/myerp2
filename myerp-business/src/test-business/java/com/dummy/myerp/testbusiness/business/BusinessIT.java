@@ -177,7 +177,6 @@ public class BusinessIT {
         List<EcritureComptable> listEcriture = getBusinessProxy().getComptabiliteManager().getListEcritureComptable();
         EcritureComptable ecritureComptable = business.getComptabiliteManager().getListEcritureComptable().get(1);
 
-        CompteComptable compteComptable1 = business.getComptabiliteManager().getListCompteComptable().get(1);
 
        LigneEcritureComptable ligneEcritureComptableEdit= ecritureComptable.getListLigneEcriture().get(1);
        ligneEcritureComptableEdit.setCredit(BigDecimal.ZERO);
