@@ -202,7 +202,7 @@ public class BusinessIT {
         } finally {
 
             assertEquals((getBusinessProxy().getComptabiliteManager().getListEcritureComptable().size()), (listEcriture.size()));
-            assertEquals((message), ("L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit."));
+            assertEquals(("L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit."),(message));
         }
     }
 
