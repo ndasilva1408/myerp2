@@ -130,7 +130,7 @@ public class BusinessIT {
 
     @Test
     @Tag("RG2")
-    @Rollback
+    @Rollback(true)
     public void givenEcritureWithoutRG2_WhenInsertEcritureComptable_NotPersisted() throws NotFoundException {
         String message = null;
 
@@ -172,7 +172,7 @@ public class BusinessIT {
 
     @Tag("RG3")
     @Test
-    @Rollback
+    @Rollback(true)
     public void givenEcritureWithoutRG3_WhenInsertEcritureComptable_NotPersisted() {
 
         List<EcritureComptable> listEcriture = getBusinessProxy().getComptabiliteManager().getListEcritureComptable();
