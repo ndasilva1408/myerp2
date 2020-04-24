@@ -179,12 +179,12 @@ public class BusinessIT {
 
 
        LigneEcritureComptable ligneEcritureComptableEdit= ecritureComptable.getListLigneEcriture().get(1);
-       ligneEcritureComptableEdit.setCredit(BigDecimal.valueOf(-12000));
+       ligneEcritureComptableEdit.setCredit( new BigDecimal(-12000));
        ligneEcritureComptableEdit.setDebit(BigDecimal.ZERO);
 
 
        LigneEcritureComptable ligneEcritureComptableEdit1= ecritureComptable.getListLigneEcriture().get(0);
-       ligneEcritureComptableEdit1.setCredit(BigDecimal.valueOf(12000));
+       ligneEcritureComptableEdit1.setCredit(new BigDecimal(12000));
        ligneEcritureComptableEdit1.setDebit(BigDecimal.ZERO);
 
        ecritureComptable.getListLigneEcriture().remove(1);
