@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -150,7 +151,7 @@ public class BusinessIT {
         ligneEcritureComptable2.setCompteComptable(compteComptable2);
 
 
-        List<EcritureComptable> listEcriture = getBusinessProxy().getComptabiliteManager().getListEcritureComptable();
+        List<EcritureComptable> listEcriture = business.getComptabiliteManager().getListEcritureComptable();
         EcritureComptable ecritureComptable = dao.getComptabiliteDao().getEcritureComptable(-1);
         ecritureComptable.getListLigneEcriture().add(0, ligneEcritureComptable1);
         ecritureComptable.getListLigneEcriture().add(1, ligneEcritureComptable2);
@@ -159,7 +160,7 @@ public class BusinessIT {
 
 
         try {
-            getBusinessProxy().getComptabiliteManager().insertEcritureComptable(ecritureComptable);
+            business.getComptabiliteManager().insertEcritureComptable(ecritureComptable);
         } catch (FunctionalException e) {
             message = e.getMessage();
         } finally {
@@ -170,7 +171,7 @@ public class BusinessIT {
     }
 
 
-    @Tag("RG3")
+  /*  @Tag("RG3")
     @Test
     @Rollback(true)
     public void givenEcritureWithoutRG3_WhenInsertEcritureComptable_NotPersisted() {
@@ -204,7 +205,34 @@ public class BusinessIT {
             assertEquals((getBusinessProxy().getComptabiliteManager().getListEcritureComptable().size()), (listEcriture.size()));
             assertEquals(("L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit."),(message));
         }
-    }
+    }*/
 
+  @Tag("RG4")
+  @Test
+  public void checkRG4_givenEcritureWithNegativeNumberAndNewSequence_WhenInsertEcriture_Persisted() throws NotFoundException {
+      List<EcritureComptable> listEcriture = getBusinessProxy().getComptabiliteManager().getListEcritureComptable();
+      EcritureComptable ecritureComptable = business.getComptabiliteManager().getListEcritureComptable().get(0);
+      ecritureComptable.getListLigneEcriture().get(0).setDebit(new BigDecimal(-1500));
+      ecritureComptable.getListLigneEcriture().get(1).setCredit(new BigDecimal(-1500));
+      business.getComptabiliteManager().addReference(ecritureComptable);
 
+      //when
+      String message = null;
+      try {
+          business.getComptabiliteManager().insertEcritureComptable(ecritureComptable);
+      } catch (FunctionalException e) {
+          e.getMessage();
+      }finally {
+          //then
+          Calendar calendar = Calendar.getInstance();
+          calendar.setTime(ecritureComptable.getDate());
+          int yearInRef = calendar.get(Calendar.YEAR);
+
+          assertNotNull(dao.getComptabiliteDao().getSequenceEcritureComptableByCodeYear(ecritureComptable.getJournal().getCode(),yearInRef));
+
+          assertEquals((business.getComptabiliteManager().getListEcritureComptable().size()),(listEcriture.size()));
+
+          getBusinessProxy().getComptabiliteManager().deleteEcritureComptable(ecritureComptable.getId());
+      }
+  }
 }
