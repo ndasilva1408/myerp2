@@ -138,6 +138,7 @@ public class BusinessIT {
         CompteComptable compteComptable1 = business.getComptabiliteManager().getListCompteComptable().get(1);
         CompteComptable compteComptable2 = business.getComptabiliteManager().getListCompteComptable().get(2);
 
+
         LigneEcritureComptable ligneEcritureComptable1 = new LigneEcritureComptable();
         ligneEcritureComptable1.setCredit(BigDecimal.valueOf(2000));
         ligneEcritureComptable1.setLibelle("test");
@@ -158,6 +159,16 @@ public class BusinessIT {
 
         ecritureComptable.getListLigneEcriture().get(1).setCredit(new BigDecimal(1300));
 
+        //tst
+        compteComptable1.getLibelle();
+        compteComptable1.getNumero();
+        ecritureComptable.getLibelle();
+        ecritureComptable.getReference();
+        ecritureComptable.getJournal();
+        ecritureComptable.getDate();
+        ecritureComptable.getJournal().getCode();
+        ecritureComptable.getJournal().getLibelle();
+        ligneEcritureComptable1.getLibelle();
 
         try {
             business.getComptabiliteManager().insertEcritureComptable(ecritureComptable);
@@ -207,32 +218,32 @@ public class BusinessIT {
         }
     }*/
 
-  @Tag("RG4")
-  @Test
-  public void checkRG4_givenEcritureWithNegativeNumberAndNewSequence_WhenInsertEcriture_Persisted() throws NotFoundException {
-      List<EcritureComptable> listEcriture = getBusinessProxy().getComptabiliteManager().getListEcritureComptable();
-      EcritureComptable ecritureComptable = business.getComptabiliteManager().getListEcritureComptable().get(0);
-      ecritureComptable.getListLigneEcriture().get(0).setDebit(new BigDecimal(-1500));
-      ecritureComptable.getListLigneEcriture().get(1).setCredit(new BigDecimal(-1500));
-      business.getComptabiliteManager().addReference(ecritureComptable);
+    @Tag("RG4")
+    @Test
+    public void checkRG4_givenEcritureWithNegativeNumberAndNewSequence_WhenInsertEcriture_Persisted() throws NotFoundException {
+        List<EcritureComptable> listEcriture = getBusinessProxy().getComptabiliteManager().getListEcritureComptable();
+        EcritureComptable ecritureComptable = business.getComptabiliteManager().getListEcritureComptable().get(0);
+        ecritureComptable.getListLigneEcriture().get(0).setDebit(new BigDecimal(-1500));
+        ecritureComptable.getListLigneEcriture().get(1).setCredit(new BigDecimal(-1500));
+        business.getComptabiliteManager().addReference(ecritureComptable);
 
-      //when
-      String message = null;
-      try {
-          business.getComptabiliteManager().insertEcritureComptable(ecritureComptable);
-      } catch (FunctionalException e) {
-          e.getMessage();
-      }finally {
-          //then
-          Calendar calendar = Calendar.getInstance();
-          calendar.setTime(ecritureComptable.getDate());
-          int yearInRef = calendar.get(Calendar.YEAR);
+        //when
+        String message = null;
+        try {
+            business.getComptabiliteManager().insertEcritureComptable(ecritureComptable);
+        } catch (FunctionalException e) {
+            e.getMessage();
+        } finally {
+            //then
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(ecritureComptable.getDate());
+            int yearInRef = calendar.get(Calendar.YEAR);
 
-          assertNotNull(dao.getComptabiliteDao().getSequenceEcritureComptableByCodeYear(ecritureComptable.getJournal().getCode(),yearInRef));
+            assertNotNull(dao.getComptabiliteDao().getSequenceEcritureComptableByCodeYear(ecritureComptable.getJournal().getCode(), yearInRef));
 
-          assertEquals((business.getComptabiliteManager().getListEcritureComptable().size()),(listEcriture.size()));
+            assertEquals((business.getComptabiliteManager().getListEcritureComptable().size()), (listEcriture.size()));
 
-          getBusinessProxy().getComptabiliteManager().deleteEcritureComptable(ecritureComptable.getId());
-      }
-  }
+            getBusinessProxy().getComptabiliteManager().deleteEcritureComptable(ecritureComptable.getId());
+        }
+    }
 }
