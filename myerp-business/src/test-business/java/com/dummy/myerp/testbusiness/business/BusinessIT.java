@@ -169,8 +169,8 @@ public class BusinessIT {
         }
     }
 
-/*
-   @Tag("RG3")             // EN COURS
+
+   @Tag("RG3")
     @Test
     public void givenEcritureWithoutRG3_WhenInsertEcritureComptable_NotPersisted() {
 
@@ -178,26 +178,21 @@ public class BusinessIT {
         EcritureComptable ecritureComptable = business.getComptabiliteManager().getListEcritureComptable().get(1);
 
         CompteComptable compteComptable1 = business.getComptabiliteManager().getListCompteComptable().get(1);
-        CompteComptable compteComptable2 = business.getComptabiliteManager().getListCompteComptable().get(2);
 
-        LigneEcritureComptable ligneEcritureComptable1 = new LigneEcritureComptable();
-        ligneEcritureComptable1.setCredit(BigDecimal.valueOf(2000));
-        ligneEcritureComptable1.setLibelle("test");
-        ligneEcritureComptable1.setCompteComptable(compteComptable1);
+       LigneEcritureComptable ligneEcritureComptableEdit= ecritureComptable.getListLigneEcriture().get(1);
+       ligneEcritureComptableEdit.setCredit(BigDecimal.ZERO);
+       ligneEcritureComptableEdit.setDebit(BigDecimal.ZERO);
 
 
-        LigneEcritureComptable ligneEcritureComptable2 = new LigneEcritureComptable();
-
-        ligneEcritureComptable2.setLibelle("test");
-        ligneEcritureComptable2.setDebit(BigDecimal.valueOf(2000));
-        ligneEcritureComptable2.setCompteComptable(compteComptable2);
-
-        ecritureComptable.getListLigneEcriture().add(0, ligneEcritureComptable1);
+       ecritureComptable.getListLigneEcriture().remove(1);
+       ecritureComptable.getListLigneEcriture().remove(0);
+       ecritureComptable.getListLigneEcriture().add(ligneEcritureComptableEdit);
+       ecritureComptable.getListLigneEcriture().add(ligneEcritureComptableEdit);
 
         String message = null;
 
         try {
-            getBusinessProxy().getComptabiliteManager().insertEcritureComptable(ecritureComptable);
+           business.getComptabiliteManager().insertEcritureComptable(ecritureComptable);
         } catch (FunctionalException e) {
             message = e.getMessage();
         } finally {
@@ -205,7 +200,9 @@ public class BusinessIT {
             assertEquals((getBusinessProxy().getComptabiliteManager().getListEcritureComptable().size()), (listEcriture.size()));
             assertEquals((message), ("L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit."));
         }
-    }*/
+    }
+
+
 
 
 }
