@@ -159,16 +159,7 @@ public class BusinessIT {
 
         ecritureComptable.getListLigneEcriture().get(1).setCredit(new BigDecimal(1300));
 
-        //tst
-        compteComptable1.getLibelle();
-        compteComptable1.getNumero();
-        ecritureComptable.getLibelle();
-        ecritureComptable.getReference();
-        ecritureComptable.getJournal();
-        ecritureComptable.getDate();
-        ecritureComptable.getJournal().getCode();
-        ecritureComptable.getJournal().getLibelle();
-        ligneEcritureComptable1.getLibelle();
+ 
 
         try {
             business.getComptabiliteManager().insertEcritureComptable(ecritureComptable);
@@ -182,27 +173,40 @@ public class BusinessIT {
     }
 
 
-  /*  @Tag("RG3")
+  @Tag("RG3")
     @Test
     @Rollback(true)
     public void givenEcritureWithoutRG3_WhenInsertEcritureComptable_NotPersisted() {
 
         List<EcritureComptable> listEcriture = getBusinessProxy().getComptabiliteManager().getListEcritureComptable();
-        EcritureComptable ecritureComptable = business.getComptabiliteManager().getListEcritureComptable().get(3);
+        EcritureComptable ecritureComptable = new EcritureComptable();
+        JournalComptable journalComptable = new JournalComptable();
+        Date date = new Date();
+
+        journalComptable.setLibelle("Garantie");
+        journalComptable.setCode("GR");
+
+        ecritureComptable.setJournal(journalComptable);
+        ecritureComptable.setDate(date);
+        ecritureComptable.setReference("GR-2020/00001");
+        ecritureComptable.setLibelle("Garantie");
 
 
-        LigneEcritureComptable ligneEcritureComptableEdit = ecritureComptable.getListLigneEcriture().get(1);
+        LigneEcritureComptable ligneEcritureComptableEdit = new LigneEcritureComptable();
         ligneEcritureComptableEdit.setCredit(new BigDecimal(-12000));
         ligneEcritureComptableEdit.setDebit(BigDecimal.ZERO);
+        ligneEcritureComptableEdit.setLibelle("test");
+        ligneEcritureComptableEdit.setCompteComptable(business.getComptabiliteManager().getListCompteComptable().get(1));
 
 
-        LigneEcritureComptable ligneEcritureComptableEdit1 = ecritureComptable.getListLigneEcriture().get(0);
+        LigneEcritureComptable ligneEcritureComptableEdit1 = new LigneEcritureComptable();
         ligneEcritureComptableEdit1.setCredit(new BigDecimal(12000));
         ligneEcritureComptableEdit1.setDebit(BigDecimal.ZERO);
+        ligneEcritureComptableEdit1.setLibelle("test");
+        ligneEcritureComptableEdit1.setCompteComptable(business.getComptabiliteManager().getListCompteComptable().get(1));
 
-        ecritureComptable.getListLigneEcriture().remove(1);
-        ecritureComptable.getListLigneEcriture().remove(0);
-        ecritureComptable.getListLigneEcriture().add(ligneEcritureComptableEdit);
+
+      ecritureComptable.getListLigneEcriture().add(ligneEcritureComptableEdit);
         ecritureComptable.getListLigneEcriture().add(ligneEcritureComptableEdit1);
 
         String message = null;
@@ -216,7 +220,7 @@ public class BusinessIT {
             assertEquals((getBusinessProxy().getComptabiliteManager().getListEcritureComptable().size()), (listEcriture.size()));
             assertEquals(("L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit."),(message));
         }
-    }*/
+    }
 
     @Tag("RG4")
     @Test
