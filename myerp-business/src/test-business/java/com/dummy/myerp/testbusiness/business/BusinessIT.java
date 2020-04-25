@@ -123,6 +123,23 @@ public class BusinessIT {
     }
 
     @Test
+    public void givenUpdatedEcriture_thenUpdate() throws FunctionalException, NotFoundException {
+        List<EcritureComptable>ecritureComptableList = business.getComptabiliteManager().getListEcritureComptable();
+        EcritureComptable ecritureComptable = ecritureComptableList.get(3);
+        String oldLibelle = ecritureComptable.getLibelle();
+        String newLibelle= "Libelle Test Update";
+        String ref = ecritureComptable.getReference();
+        ecritureComptable.setLibelle(newLibelle);
+
+        business.getComptabiliteManager().updateEcritureComptable(ecritureComptable);
+        assertEquals(dao.getComptabiliteDao().getEcritureComptableByRef(ref).getLibelle(), newLibelle);
+
+        //reinit
+        ecritureComptable.setLibelle(oldLibelle);
+        business.getComptabiliteManager().updateEcritureComptable(ecritureComptable);
+    }
+
+    @Test
     public void chooseEcritureComptableID_thenDelete() {
         dao.getComptabiliteDao().deleteEcritureComptable(1);
     }
@@ -220,6 +237,7 @@ public class BusinessIT {
             assertEquals((getBusinessProxy().getComptabiliteManager().getListEcritureComptable().size()), (listEcriture.size()));
             assertEquals(("L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit."),(message));
         }
+
     }
 
     @Tag("RG4")
@@ -250,4 +268,19 @@ public class BusinessIT {
             getBusinessProxy().getComptabiliteManager().deleteEcritureComptable(ecritureComptable.getId());
         }
     }
+    /*@Tag("RG5")
+    @Test
+    public void CheckRG5_givenEcriture_PersistedWithGoodSeqNbr(){
+        List<EcritureComptable>ecritureComptableList = business.getComptabiliteManager().getListEcritureComptable();
+        EcritureComptable ecritureComptable = ecritureComptableList.get(3);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(ecritureComptable.getDate());
+        SequenceEcritureComptable sequenceEcritureComptable = dao.getComptabiliteDao().getSequenceEcritureComptableByCodeYear(
+                ecritureComptable.getJournal().getCode(),
+                calendar.get(Calendar.YEAR));
+
+
+        )
+    }
+*/
 }
