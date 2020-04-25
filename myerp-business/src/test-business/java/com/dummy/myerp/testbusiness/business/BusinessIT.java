@@ -149,7 +149,7 @@ public class BusinessIT {
     @Test
     @Tag("RG2")
     @Rollback()
-    public void givenEcritureWithoutRG2_WhenInsertEcritureComptable_NotPersisted() throws NotFoundException {
+    public void checkRG2_WhenInsertEcritureComptable() throws NotFoundException {
         String message = null;
 
         CompteComptable compteComptable1 = business.getComptabiliteManager().getListCompteComptable().get(1);
@@ -193,7 +193,7 @@ public class BusinessIT {
   @Tag("RG3")
     @Test
     @Rollback(true)
-    public void givenEcritureWithoutRG3_WhenInsertEcritureComptable_NotPersisted() {
+    public void checkRG3_WhenInsertEcritureComptable() {
 
         List<EcritureComptable> listEcriture = getBusinessProxy().getComptabiliteManager().getListEcritureComptable();
         EcritureComptable ecritureComptable = new EcritureComptable();
@@ -268,9 +268,9 @@ public class BusinessIT {
             getBusinessProxy().getComptabiliteManager().deleteEcritureComptable(ecritureComptable.getId());
         }
     }
-    /*@Tag("RG5")
+    @Tag("RG5")
     @Test
-    public void CheckRG5_givenEcriture_PersistedWithGoodSeqNbr(){
+    public void CheckRG5_givenEcriture_PersistedWithGoodSeqNbr() throws NotFoundException {
         List<EcritureComptable>ecritureComptableList = business.getComptabiliteManager().getListEcritureComptable();
         EcritureComptable ecritureComptable = ecritureComptableList.get(3);
         Calendar calendar = Calendar.getInstance();
@@ -279,8 +279,55 @@ public class BusinessIT {
                 ecritureComptable.getJournal().getCode(),
                 calendar.get(Calendar.YEAR));
 
+        EcritureComptable ecritureComptable1 = this. getEcritureComptable();
+        ecritureComptable1.setDate(ecritureComptable.getDate());
+        ecritureComptable1.setJournal(ecritureComptable1.getJournal());
+        business.getComptabiliteManager().addReference(ecritureComptable1);
 
-        )
+        String errorMessage = null;
+        try{
+            business.getComptabiliteManager().insertEcritureComptable(ecritureComptable1);
+        } catch (FunctionalException e) {
+          errorMessage=  e.getMessage();
+        } finally {
+
+            assertNotNull(sequenceEcritureComptable);
+            assertEquals((business.getComptabiliteManager().getListEcritureComptable().size()),ecritureComptableList.size()+1);
+
+            business.getComptabiliteManager().deleteEcritureComptable(ecritureComptable1.getId());
+        }
+
+
+
     }
-*/
+
+
+    private EcritureComptable getEcritureComptable() {
+        List<CompteComptable>compteComptableList = business.getComptabiliteManager().getListCompteComptable();
+        List<JournalComptable>journalComptableList = business.getComptabiliteManager().getListJournalComptable();
+
+        JournalComptable journalComptable= journalComptableList.get(0);
+        CompteComptable compteComptable1 = compteComptableList.get(0);
+        CompteComptable compteComptable2= compteComptableList.get(1);
+
+        EcritureComptable ecritureComptable = new EcritureComptable();
+        ecritureComptable.setDate(new Date());
+        ecritureComptable.setLibelle("IntegrationTestLibelle");
+        ecritureComptable.setJournal(journalComptable);
+
+        LigneEcritureComptable ligneEcritureComptable1= new LigneEcritureComptable();
+        ligneEcritureComptable1.setCompteComptable(compteComptable1);
+        ligneEcritureComptable1.setDebit(new BigDecimal(13000));
+        ligneEcritureComptable1.setLibelle("IntegrationTestLibelle");
+
+        LigneEcritureComptable ligneEcritureComptable2 = new LigneEcritureComptable();
+        ligneEcritureComptable2.setCompteComptable(compteComptable2);
+        ligneEcritureComptable2.setCredit(new BigDecimal(13000));
+        ligneEcritureComptable2.setLibelle("IntegrationTestLibelle");
+
+        ecritureComptable.getListLigneEcriture().add(ligneEcritureComptable1);
+        ecritureComptable.getListLigneEcriture().add(ligneEcritureComptable2);
+
+        return ecritureComptable;
+    }
 }
