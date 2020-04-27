@@ -318,7 +318,7 @@ public class ComptabiliteManagerImplTest {
                 null, new BigDecimal(-123),
                 null));
 
-        assertThrows(FunctionalException.class, () -> manager.checkEcritureComptable(vEcritureComptable));
+        assertThrows(FunctionalException.class, () -> manager.checkEcritureComptableUnit(vEcritureComptable));
     }
 
 }
