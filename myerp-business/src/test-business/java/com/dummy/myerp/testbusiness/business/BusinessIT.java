@@ -302,7 +302,7 @@ public class BusinessIT {
 
     }
 
-    @Tag("RG6")
+ /*   @Tag("RG6")
     @Test
     public void checkRG6_whenUpdate() {
         List<EcritureComptable>ecritureComptableList = business.getComptabiliteManager().getListEcritureComptable();
@@ -312,7 +312,7 @@ public class BusinessIT {
         Exception exception = assertThrows(FunctionalException.class,() -> business.getComptabiliteManager().updateEcritureComptable(ecritureComptable));
         assertEquals("Une autre écriture comptable existe déjà avec la même référence.",exception.getMessage());
         assertEquals(business.getComptabiliteManager().getListEcritureComptable().size(),ecritureComptableList.size());
-    }
+    }*/
 
 
 
