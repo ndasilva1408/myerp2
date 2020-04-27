@@ -17,7 +17,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -302,7 +301,7 @@ public class BusinessIT {
 
     }
 
- /*   @Tag("RG6")
+    @Tag("RG6")
     @Test
     public void checkRG6_whenUpdate() {
         List<EcritureComptable>ecritureComptableList = business.getComptabiliteManager().getListEcritureComptable();
@@ -312,7 +311,7 @@ public class BusinessIT {
         Exception exception = assertThrows(FunctionalException.class,() -> business.getComptabiliteManager().updateEcritureComptable(ecritureComptable));
         assertEquals("Une autre écriture comptable existe déjà avec la même référence.",exception.getMessage());
         assertEquals(business.getComptabiliteManager().getListEcritureComptable().size(),ecritureComptableList.size());
-    }*/
+    }
 
 
 

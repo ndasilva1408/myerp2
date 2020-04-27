@@ -9,14 +9,12 @@ import com.dummy.myerp.model.bean.comptabilite.*;
 
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
-import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -320,7 +318,7 @@ public class ComptabiliteManagerImplTest {
                 null, new BigDecimal(-123),
                 null));
 
-        assertThrows(FunctionalException.class, () -> manager.checkEcritureComptableUnit(vEcritureComptable));
+        assertThrows(FunctionalException.class, () -> manager.checkEcritureComptable(vEcritureComptable));
     }
 
 }
