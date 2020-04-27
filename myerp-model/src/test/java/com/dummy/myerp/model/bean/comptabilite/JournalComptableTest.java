@@ -58,4 +58,15 @@ public class JournalComptableTest {
         //Assert
         Assert.assertNull(getByCode(pList,""));
     }
+
+    private String code = "fakeCode";
+    private String libelle = "fakeLibelle";
+
+    @Test
+    public void toStringTest(){
+        JournalComptable journalComptable = new JournalComptable(code,libelle);
+        String expectedString = "JournalComptable{code='"+code+"', libelle='"+libelle+"'}";
+        String resultString =journalComptable.toString();
+        assertThat(expectedString).isEqualTo(resultString);
+    }
 }

@@ -2,8 +2,10 @@ package com.dummy.myerp.model.bean.comptabilite;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Date;
 
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,10 +27,6 @@ public class EcritureComptableTest {
                 vDebit, vCredit);
         return vRetour;
     }
-
-    @Mock
-   LigneEcritureComptable ligneEcritureComptable;
-
 
     @Test
     @Tag("IsEquilibree")
@@ -132,5 +130,29 @@ public class EcritureComptableTest {
         //Assert
         Assert.assertEquals(vEcriture.getTotalDebit(),BigDecimal.ZERO);
 
+    }
+
+
+    @Test
+    public void toStringTest(){
+        EcritureComptable ecritureComptable = new EcritureComptable();
+        ecritureComptable.setLibelle("fakeLibelle");
+        ecritureComptable.setJournal(new JournalComptable("dummyCode", "dummyLibelle"));
+        ecritureComptable.setId(1);
+        ecritureComptable.setDate(new Date());
+        ecritureComptable.setReference("AA-0000-00000");
+        String sep = ", ";
+        String expectedString = "EcritureComptable{id="+ecritureComptable.getId()
+                +sep+"journal="+ecritureComptable.getJournal()
+                +sep+"reference='"+ecritureComptable.getReference()+"'"
+                +sep+"date="+ecritureComptable.getDate()
+                +sep+"libelle='"+ecritureComptable.getLibelle()+"'"
+                +sep+"totalDebit="+ecritureComptable.getTotalDebit().toPlainString()
+                +sep+"totalCredit="+ecritureComptable.getTotalCredit().toPlainString()
+                +sep+"listLigneEcriture=[\n"+
+                StringUtils.join(ecritureComptable.getListLigneEcriture(), "\n")+
+                "\n]}";
+        String resultString = ecritureComptable.toString();
+        Assert.assertEquals(expectedString, resultString);
     }
 }

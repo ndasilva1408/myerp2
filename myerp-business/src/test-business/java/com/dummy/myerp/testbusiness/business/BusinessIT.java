@@ -25,6 +25,7 @@ import java.util.List;
 import static com.dummy.myerp.business.impl.AbstractBusinessManager.configure;
 import static com.dummy.myerp.testbusiness.business.BusinessTestCase.getBusinessProxy;
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/com/dummy/myerp/testbusiness/business/bootstrapContext.xml")
@@ -300,6 +301,19 @@ public class BusinessIT {
 
 
     }
+
+    @Tag("RG6")
+    @Test
+    public void checkRG6_whenUpdate() {
+        List<EcritureComptable>ecritureComptableList = business.getComptabiliteManager().getListEcritureComptable();
+        EcritureComptable ecritureComptable = ecritureComptableList.get(0);
+        ecritureComptable.setReference(ecritureComptableList.get(1).getReference());
+        ecritureComptable.getJournal().setCode(ecritureComptableList.get(1).getJournal().getCode());
+        Exception exception = assertThrows(FunctionalException.class,() -> business.getComptabiliteManager().updateEcritureComptable(ecritureComptable));
+        assertEquals("Une autre écriture comptable existe déjà avec la même référence.",exception.getMessage());
+        assertEquals(business.getComptabiliteManager().getListEcritureComptable().size(),ecritureComptableList.size());
+    }
+
 
 
     private EcritureComptable getEcritureComptable() {
