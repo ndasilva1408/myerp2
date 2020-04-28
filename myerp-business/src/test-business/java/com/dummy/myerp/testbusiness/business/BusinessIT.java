@@ -92,9 +92,6 @@ public class BusinessIT {
         ligneEcritureComptable1.setDebit(bd);
         ligneEcritureComptable1.setCredit(bd);
 
-
-        EcritureComptable ecritureComptableTest = new EcritureComptable();
-
         EcritureComptable ecritureComptable1 = new EcritureComptable();
         ecritureComptable1.setDate(date);
 
@@ -124,10 +121,10 @@ public class BusinessIT {
 
     @Test
     public void givenUpdatedEcriture_thenUpdate() throws FunctionalException, NotFoundException {
-        List<EcritureComptable>ecritureComptableList = business.getComptabiliteManager().getListEcritureComptable();
+        List<EcritureComptable> ecritureComptableList = business.getComptabiliteManager().getListEcritureComptable();
         EcritureComptable ecritureComptable = ecritureComptableList.get(3);
         String oldLibelle = ecritureComptable.getLibelle();
-        String newLibelle= "Libelle Test Update";
+        String newLibelle = "Libelle Test Update";
         String ref = ecritureComptable.getReference();
         ecritureComptable.setLibelle(newLibelle);
 
@@ -176,7 +173,6 @@ public class BusinessIT {
 
         ecritureComptable.getListLigneEcriture().get(1).setCredit(new BigDecimal(1300));
 
- 
 
         try {
             business.getComptabiliteManager().insertEcritureComptable(ecritureComptable);
@@ -190,7 +186,7 @@ public class BusinessIT {
     }
 
 
-  @Tag("RG3")
+    @Tag("RG3")
     @Test
     @Rollback(true)
     public void checkRG3_WhenInsertEcritureComptable() {
@@ -223,8 +219,9 @@ public class BusinessIT {
         ligneEcritureComptableEdit1.setCompteComptable(business.getComptabiliteManager().getListCompteComptable().get(1));
 
 
-      ecritureComptable.getListLigneEcriture().add(ligneEcritureComptableEdit);
+        ecritureComptable.getListLigneEcriture().add(ligneEcritureComptableEdit);
         ecritureComptable.getListLigneEcriture().add(ligneEcritureComptableEdit1);
+
 
         String message = null;
 
@@ -235,7 +232,7 @@ public class BusinessIT {
         } finally {
 
             assertEquals((getBusinessProxy().getComptabiliteManager().getListEcritureComptable().size()), (listEcriture.size()));
-            assertEquals(("L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit."),(message));
+            assertEquals(("L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit."), (message));
         }
 
     }
@@ -249,14 +246,13 @@ public class BusinessIT {
         ecritureComptable.getListLigneEcriture().get(1).setCredit(new BigDecimal(-1500));
         business.getComptabiliteManager().addReference(ecritureComptable);
 
-        //when
-        String message = null;
+
         try {
             business.getComptabiliteManager().insertEcritureComptable(ecritureComptable);
         } catch (FunctionalException e) {
             e.getMessage();
         } finally {
-            //then
+
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(ecritureComptable.getDate());
             int yearInRef = calendar.get(Calendar.YEAR);
@@ -268,10 +264,11 @@ public class BusinessIT {
             getBusinessProxy().getComptabiliteManager().deleteEcritureComptable(ecritureComptable.getId());
         }
     }
+
     @Tag("RG5")
     @Test
     public void CheckRG5_givenEcriture_PersistedWithGoodSeqNbr() throws NotFoundException {
-        List<EcritureComptable>ecritureComptableList = business.getComptabiliteManager().getListEcritureComptable();
+        List<EcritureComptable> ecritureComptableList = business.getComptabiliteManager().getListEcritureComptable();
         EcritureComptable ecritureComptable = ecritureComptableList.get(3);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(ecritureComptable.getDate());
@@ -279,24 +276,22 @@ public class BusinessIT {
                 ecritureComptable.getJournal().getCode(),
                 calendar.get(Calendar.YEAR));
 
-        EcritureComptable ecritureComptable1 = this. getEcritureComptable();
+        EcritureComptable ecritureComptable1 = this.getEcritureComptable();
         ecritureComptable1.setDate(ecritureComptable.getDate());
         ecritureComptable1.setJournal(ecritureComptable1.getJournal());
         business.getComptabiliteManager().addReference(ecritureComptable1);
 
-        String errorMessage = null;
-        try{
+        try {
             business.getComptabiliteManager().insertEcritureComptable(ecritureComptable1);
         } catch (FunctionalException e) {
-          errorMessage=  e.getMessage();
+            e.getMessage();
         } finally {
 
             assertNotNull(sequenceEcritureComptable);
-            assertEquals((business.getComptabiliteManager().getListEcritureComptable().size()),ecritureComptableList.size()+1);
+            assertEquals((business.getComptabiliteManager().getListEcritureComptable().size()), ecritureComptableList.size() + 1);
 
             business.getComptabiliteManager().deleteEcritureComptable(ecritureComptable1.getId());
         }
-
 
 
     }
@@ -304,31 +299,30 @@ public class BusinessIT {
     @Tag("RG6")
     @Test
     public void checkRG6_whenUpdate() {
-        List<EcritureComptable>ecritureComptableList = business.getComptabiliteManager().getListEcritureComptable();
+        List<EcritureComptable> ecritureComptableList = business.getComptabiliteManager().getListEcritureComptable();
         EcritureComptable ecritureComptable = ecritureComptableList.get(0);
         ecritureComptable.setReference(ecritureComptableList.get(1).getReference());
         ecritureComptable.getJournal().setCode(ecritureComptableList.get(1).getJournal().getCode());
-        Exception exception = assertThrows(FunctionalException.class,() -> business.getComptabiliteManager().updateEcritureComptable(ecritureComptable));
-        assertEquals("Une autre écriture comptable existe déjà avec la même référence.",exception.getMessage());
-        assertEquals(business.getComptabiliteManager().getListEcritureComptable().size(),ecritureComptableList.size());
+        Exception exception = assertThrows(FunctionalException.class, () -> business.getComptabiliteManager().updateEcritureComptable(ecritureComptable));
+        assertEquals("Une autre écriture comptable existe déjà avec la même référence.", exception.getMessage());
+        assertEquals(business.getComptabiliteManager().getListEcritureComptable().size(), ecritureComptableList.size());
     }
 
 
-
     private EcritureComptable getEcritureComptable() {
-        List<CompteComptable>compteComptableList = business.getComptabiliteManager().getListCompteComptable();
-        List<JournalComptable>journalComptableList = business.getComptabiliteManager().getListJournalComptable();
+        List<CompteComptable> compteComptableList = business.getComptabiliteManager().getListCompteComptable();
+        List<JournalComptable> journalComptableList = business.getComptabiliteManager().getListJournalComptable();
 
-        JournalComptable journalComptable= journalComptableList.get(0);
+        JournalComptable journalComptable = journalComptableList.get(0);
         CompteComptable compteComptable1 = compteComptableList.get(0);
-        CompteComptable compteComptable2= compteComptableList.get(1);
+        CompteComptable compteComptable2 = compteComptableList.get(1);
 
         EcritureComptable ecritureComptable = new EcritureComptable();
         ecritureComptable.setDate(new Date());
         ecritureComptable.setLibelle("IntegrationTestLibelle");
         ecritureComptable.setJournal(journalComptable);
 
-        LigneEcritureComptable ligneEcritureComptable1= new LigneEcritureComptable();
+        LigneEcritureComptable ligneEcritureComptable1 = new LigneEcritureComptable();
         ligneEcritureComptable1.setCompteComptable(compteComptable1);
         ligneEcritureComptable1.setDebit(new BigDecimal(13000));
         ligneEcritureComptable1.setLibelle("IntegrationTestLibelle");

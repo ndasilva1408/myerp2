@@ -21,7 +21,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,19 +38,15 @@ public class ComptabiliteManagerImplTest {
     private ComptabiliteManagerImpl classUnderTest;
 
     @Mock
-    EcritureComptable ecritureComptable;
+    private EcritureComptable ecritureComptable;
     @Mock
-    DaoProxy daoProxy;
+    private DaoProxy daoProxy;
     @Mock
-    ComptabiliteDao comptabiliteDao;
+    private ComptabiliteDao comptabiliteDao;
     @Mock
-    JournalComptable journalComptable;
+    private JournalComptable journalComptable;
     @Mock
-    SequenceEcritureComptable sequenceEcritureComptable;
-    @Mock
-    Calendar calendar;
-
-
+    private SequenceEcritureComptable sequenceEcritureComptable;
     @Mock
     private BusinessProxy businessProxy;
 
@@ -62,7 +57,6 @@ public class ComptabiliteManagerImplTest {
     @BeforeEach
     public void init() {
         AbstractBusinessManager.configure(businessProxy, daoProxy, TransactionManager.getInstance());
-
     }
 
 
@@ -203,7 +197,6 @@ public class ComptabiliteManagerImplTest {
         when(ecritureComptable.getReference()).thenReturn(null);
 
 
-
         FunctionalException functionalException = assertThrows(FunctionalException.class,
                 () -> classUnderTest.checkEcritureComptableReference(ecritureComptable));
 
@@ -214,7 +207,7 @@ public class ComptabiliteManagerImplTest {
 
 
     @Test
-    public void checkEcritureComptableReferenceRG5_whenJournalCodeIsWrong()  {
+    public void checkEcritureComptableReferenceRG5_whenJournalCodeIsWrong() {
 
         String wrongCodeJournal = "AA";
         when(ecritureComptable.getDate()).thenReturn(localdate);

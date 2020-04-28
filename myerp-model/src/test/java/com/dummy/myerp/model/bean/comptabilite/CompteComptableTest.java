@@ -52,7 +52,6 @@ public class CompteComptableTest {
     private Integer fakeInt = 1;
     private String fakeLibelle = "Compte test";
 
-
     @Test
     public void toStringTest(){
         this.compteComptable = new CompteComptable(fakeInt,fakeLibelle);
