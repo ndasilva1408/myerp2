@@ -129,7 +129,7 @@ public class EcritureComptableTest {
 
         //Assert
         Assert.assertEquals(vEcriture.getTotalDebit(),BigDecimal.ZERO);
-
+        //TEST
     }
 
 
