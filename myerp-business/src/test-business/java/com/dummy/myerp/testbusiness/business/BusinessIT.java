@@ -136,7 +136,7 @@ public class BusinessIT {
         business.getComptabiliteManager().updateEcritureComptable(ecritureComptable);
     }
 
-    //TEst soutenance
+    //Test soutenance odsq
 
     @Test
     public void chooseEcritureComptableID_thenDelete() {
