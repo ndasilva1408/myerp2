@@ -66,7 +66,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         // TODO à implémenter : Done
         // Bien se réferer à la JavaDoc de cette méthode !
         /* Le principe :
-                1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
+                1.  Remonter depuis la persistance la dernière valeur de la séquence du journal pour l'année de l'écriture
                     (table sequence_ecriture_comptable)*/
         int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(pEcritureComptable.getDate()));
         String codeJournal = pEcritureComptable.getJournal().getCode();

@@ -167,7 +167,7 @@ public class BusinessIT {
 
 
         List<EcritureComptable> listEcriture = business.getComptabiliteManager().getListEcritureComptable();
-        EcritureComptable ecritureComptable = dao.getComptabiliteDao().getEcritureComptable(-1);
+        EcritureComptable ecritureComptable = dao.getComptabiliteDao().getEcritureComptable(-2);
         ecritureComptable.getListLigneEcriture().add(0, ligneEcritureComptable1);
         ecritureComptable.getListLigneEcriture().add(1, ligneEcritureComptable2);
 
@@ -236,6 +236,7 @@ public class BusinessIT {
         }
 
     }
+
 
     @Tag("RG4")
     @Test
