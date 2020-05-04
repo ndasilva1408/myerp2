@@ -136,6 +136,8 @@ public class BusinessIT {
         business.getComptabiliteManager().updateEcritureComptable(ecritureComptable);
     }
 
+    //TEst soutenance
+
     @Test
     public void chooseEcritureComptableID_thenDelete() {
         dao.getComptabiliteDao().deleteEcritureComptable(1);
