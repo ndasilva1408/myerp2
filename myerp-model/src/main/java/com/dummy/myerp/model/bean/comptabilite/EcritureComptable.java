@@ -80,7 +80,7 @@ public class EcritureComptable {
      *
      * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au débit
      */
-    // TODO à tester
+    // TODO à tester : Done
     public BigDecimal getTotalDebit() {
         BigDecimal vRetour = BigDecimal.ZERO;
         for (LigneEcritureComptable vLigneEcritureComptable : listLigneEcriture) {
@@ -134,13 +134,4 @@ public class EcritureComptable {
         return vStB.toString();
     }
 
-
-  /*  public boolean equals(EcritureComptable ecritureComptable) {
-        if (ecritureComptable.getJournal() != this.getJournal() || ecritureComptable.getReference() != this.getReference() || ecritureComptable.getLibelle() != this.getLibelle() )
-
-        return false;
-
-        return true;
-
-    }*/
 }

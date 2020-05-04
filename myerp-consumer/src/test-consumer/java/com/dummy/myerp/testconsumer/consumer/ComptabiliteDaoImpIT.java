@@ -3,16 +3,13 @@ package com.dummy.myerp.testconsumer.consumer;
 
 import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
 import com.dummy.myerp.consumer.db.AbstractDbConsumer;
-import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.Calendar;
@@ -87,7 +84,7 @@ public class ComptabiliteDaoImpIT extends AbstractDbConsumer {
 
   @Test
   public void GivenEcritureComptable_WhenInsertFullEcritureComptable_isInserted(){
-    //given
+
     int nbResult = dao.getListEcritureComptable().size();
     EcritureComptable ecritureComptable = new EcritureComptable();
     ecritureComptable.setLibelle("TestDao");
@@ -100,20 +97,18 @@ public class ComptabiliteDaoImpIT extends AbstractDbConsumer {
     ecritureComptable.setJournal(journal);
     ecritureComptable.setReference("AC-2016/00002");
 
-    //when
     dao.insertEcritureComptable(ecritureComptable);
 
-    //then
+
     assertEquals((dao.getListEcritureComptable().size()),(nbResult+1));
     assertNotNull(ecritureComptable.getId());
 
-    //suppression de l'enregistrement pour garantir l'intégrité des tests
     dao.deleteEcritureComptable(ecritureComptable.getId());
   }
 
   @Test
   public void GivenEcritureComptable_WhenUpdateEcritureComptable_isUpdated() throws NotFoundException {
-    //given
+
     Calendar now = Calendar.getInstance();
 
     String newLibelle = "Changement libelle";
@@ -122,10 +117,10 @@ public class ComptabiliteDaoImpIT extends AbstractDbConsumer {
     oldEcritureComptable.setLibelle(newLibelle);
     oldEcritureComptable.setDate(now.getTime());
 
-    //when
+
     dao.updateEcritureComptable(oldEcritureComptable);
 
-    //then
+
     EcritureComptable newEcritureComptable = dao.getEcritureComptable(-1);
     Calendar updatedDate = Calendar.getInstance();
     updatedDate.setTime(newEcritureComptable.getDate());
@@ -138,16 +133,16 @@ public class ComptabiliteDaoImpIT extends AbstractDbConsumer {
 
   @Test
   public void GivenIdEcritureComptable_WhenDeleteEcritureComptable_ObjectIsDeletedAndLigneEcritureComptableIsDeleted() throws NotFoundException {
-    // given
+
     EcritureComptable ecritureComptable = dao.getEcritureComptable(-1);
     ecritureComptable.setId(null);
     dao.insertEcritureComptable(ecritureComptable);
     int nbEcriture = dao.getListEcritureComptable().size();
 
-    //when
+
     dao.deleteEcritureComptable(ecritureComptable.getId());
 
-    //then
+
     assertEquals((dao.getListEcritureComptable().size()),(nbEcriture-1));
   }
 
