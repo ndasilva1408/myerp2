@@ -20,7 +20,7 @@ public abstract class ConsumerTestCase {
     /**
      * Constructeur.
      */
-    public ConsumerTestCase() {
+    public ConsumerTestCase() { // test
     }
 
 
