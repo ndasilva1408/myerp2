@@ -53,7 +53,7 @@
 
     <!-- ===== Version properties ===== -->
     <log4j.version>2.13.0</log4j.version>
-    <spring.version>5.2.2.RELEASE</spring.version>
+    <spring.version>5.2.22.RELEASE</spring.version>
     <junit-platform.version>5.4.0</junit-platform.version>
     <mockito.version>3.2.4</mockito.version>
   </properties>
